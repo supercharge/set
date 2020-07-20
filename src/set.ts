@@ -20,6 +20,15 @@ export class SuperchargedSet<T> extends Set<T> {
   }
 
   /**
+   * Transforms this set into an array.
+   *
+   * @returns Array
+   */
+  toArray (): T[] {
+    return Array.from(this)
+  }
+
+  /**
    * Returns the first item in the set matching the given `predicate`
    * function, or `undefined` if no such item was found.
    *
@@ -28,9 +37,7 @@ export class SuperchargedSet<T> extends Set<T> {
    * @returns {*}
    */
   find (predicate: (item: T) => T | undefined): T | undefined {
-    return Array
-      .from(this)
-      .find(predicate)
+    return this.toArray().find(predicate)
   }
 
   /**

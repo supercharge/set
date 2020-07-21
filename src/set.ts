@@ -2,6 +2,17 @@
 
 export class SuperchargedSet<T> extends Set<T> {
   /**
+   * Create a new set instance of the given `values`.
+   *
+   * @param {Iterable} values
+   *
+   * @returns {SuperchargedSet}
+   */
+  static of<T> (values?: Iterable<T>): SuperchargedSet<T> {
+    return new this<T>(values)
+  }
+
+  /**
    * Determine whether the set is empty (contains no entries).
    *
    * @returns {Boolean}

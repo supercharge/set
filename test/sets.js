@@ -7,6 +7,16 @@ const { expect } = require('@hapi/code')
 const { describe, it } = (exports.lab = Lab.script())
 
 describe('Sets', () => {
+  it('of', () => {
+    expect(Set.of().isEmpty()).to.be.true()
+    expect(Set.of([]).isEmpty()).to.be.true()
+    expect(Set.of(null).isEmpty()).to.be.true()
+    expect(Set.of(undefined).isEmpty()).to.be.true()
+
+    expect(Set.of([1, 2, 3]).isEmpty()).to.be.false()
+    expect(Set.of([1, 2, 3]).toArray()).to.equal([1, 2, 3])
+  })
+
   it('isEmpty', () => {
     const set = new Set()
     expect(set.isEmpty()).to.be.true()
@@ -28,10 +38,6 @@ describe('Sets', () => {
       .add({ id: 3, name: 'Christian' })
 
     expect(set.toArray).to.be.a.function()
-
-    const items = new Set(1, 2, 3, 3).toArray().filter(item => {
-      return item
-    })
 
     const marcus = set
       .toArray()

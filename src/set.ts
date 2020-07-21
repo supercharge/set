@@ -47,8 +47,12 @@ export class SuperchargedSet<T> extends Set<T> {
    *
    * @returns {*}
    */
-  find (predicate: (item: T) => T | undefined): T | undefined {
-    return this.toArray().find(predicate)
+  find (predicate: (item: T, set: SuperchargedSet<T>) => T | undefined): T | undefined {
+    for (const value of this.values()) {
+      if (predicate(value, this)) {
+        return value
+      }
+    }
   }
 
   /**

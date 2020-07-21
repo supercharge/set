@@ -63,11 +63,11 @@ export class SuperchargedSet<T> extends Set<T> {
    *
    * @returns {Array}
    */
-  map<R> (transform: (item: T) => R): R[] {
+  map<R> (transform: (item: T, set: SuperchargedSet<T>) => R): R[] {
     const results: R[] = []
 
     this.forEach((item) => {
-      results.push(transform(item))
+      results.push(transform(item, this))
     })
 
     return results

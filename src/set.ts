@@ -3,6 +3,9 @@
 import { tap } from '@supercharge/goodies'
 
 export class SuperchargedSet<T> {
+  /**
+   * Contains the items in the set.
+   */
   private readonly set: Set<T>
 
   /**
@@ -90,12 +93,11 @@ export class SuperchargedSet<T> {
   }
 
   /**
-   * Returns the first item in the set matching the given `predicate`
-   * function, or `undefined` if no such item was found.
+   * Returns a set containing only items matching the given `predicate`.
    *
-   * @param predicate
+   * @param {Function} predicate
    *
-   * @returns {*}
+   * @returns {SuperchargedSet}
    */
   filter (predicate: (item: T, set: SuperchargedSet<T>) => T[]): SuperchargedSet<T> {
     const results: SuperchargedSet<T> = new SuperchargedSet()
@@ -113,7 +115,7 @@ export class SuperchargedSet<T> {
    * Returns the first item in the set matching the given `predicate`
    * function, or `undefined` if no such item was found.
    *
-   * @param predicate
+   * @param {Function} predicate
    *
    * @returns {*}
    */
@@ -137,7 +139,7 @@ export class SuperchargedSet<T> {
   }
 
   /**
-   * Returns an array containing the results of applying the
+   * Returns a new set instance containing the results of applying the
    * given `transform` function to each item in the set.
    *
    * @param {Function} transform

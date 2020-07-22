@@ -5,7 +5,7 @@
   <br/>
   <br/>
   <p>
-    <h3>Sets</h3>
+    <h3>Set</h3>
   </p>
   <p>
     The <code>Set</code> class JavaScript should have shipped
@@ -19,8 +19,8 @@
   <br/>
   <br/>
   <p>
-    <a href="https://www.npmjs.com/package/@supercharge/sets"><img src="https://img.shields.io/npm/v/@supercharge/sets.svg" alt="Latest Version"></a>
-    <a href="https://www.npmjs.com/package/@supercharge/sets"><img src="https://img.shields.io/npm/dm/@supercharge/sets.svg" alt="Monthly downloads"></a>
+    <a href="https://www.npmjs.com/package/@supercharge/set"><img src="https://img.shields.io/npm/v/@supercharge/set.svg" alt="Latest Version"></a>
+    <a href="https://www.npmjs.com/package/@supercharge/set"><img src="https://img.shields.io/npm/dm/@supercharge/set.svg" alt="Monthly downloads"></a>
   </p>
   <p>
     <em>Follow <a href="http://twitter.com/marcuspoehls">@marcuspoehls</a> and <a href="http://twitter.com/superchargejs">@superchargejs</a> for updates!</em>
@@ -30,25 +30,29 @@
 ---
 
 ## Introduction
-The `@supercharge/sets` package … tba.
+The `@supercharge/set` package provides a `Set` class with helpful methods like `.isEmpty()`, `.map(callback)`, `.filter(callback)`, `.find(callback)`, and many more.
+
+**Notice:** the `@supercharge/set` package is not a drop-in replacement for the native `Set` clas shipped by JavaScript. JavaScript aligned the `Set` and `Map` classes. Aligning sets and maps felt wrong for me. In my opinion, sets are more in line with arrays, not with maps. That’s why this package exists.
+
+**It’s the `Set` class JavaScript should have shipped.**
 
 
 ## Installation
 
 ```
-npm i @supercharge/sets
+npm i @supercharge/set
 ```
 
 
 ## Docs
-Find all the [details for `@supercharge/sets` in the extensive Supercharge docs](https://superchargejs.com/docs/sets).
+Find all the [details for `@supercharge/set` in the extensive Supercharge docs](https://superchargejs.com/docs/sets).
 
 
 ## Usage
-Using `@supercharge/sets` is pretty straightforward
+Using `@supercharge/set` is pretty straightforward. The package exports a `Set` class providing all methods to interact with the set.
 
 ```js
-const Set = require('@supercharge/sets')
+const Set = require('@supercharge/set')
 
 const users = new Set()
 

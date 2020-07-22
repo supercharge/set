@@ -32,7 +32,7 @@
 ## Introduction
 The `@supercharge/set` package provides a `Set` class with helpful methods like `.isEmpty()`, `.map(callback)`, `.filter(callback)`, `.find(callback)`, and many more.
 
-**Notice:** the `@supercharge/set` package is not a drop-in replacement for the native `Set` clas shipped by JavaScript. JavaScript aligned the `Set` and `Map` classes. Aligning sets and maps felt wrong for me. In my opinion, sets are more in line with arrays, not with maps. That’s why this package exists.
+**Notice:** the `@supercharge/set` package is not a drop-in replacement for the native `Set` class shipped by JavaScript. JavaScript aligned the `Set` and `Map` classes. Aligning sets and maps felt wrong for me. In my opinion, sets are more in line with arrays, not with maps. That’s why this package exists.
 
 **It’s the `Set` class JavaScript should have shipped.**
 

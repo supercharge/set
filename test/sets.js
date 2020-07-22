@@ -17,6 +17,41 @@ describe('Sets', () => {
     expect(Set.of([1, 2, 3]).toArray()).to.equal([1, 2, 3])
   })
 
+  it('clear', () => {
+    const set = Set.of([1, 2])
+
+    expect(set.size()).to.equal(2)
+    expect(set.has(2)).to.be.true()
+
+    set.clear()
+
+    expect(set.size()).to.equal(0)
+    expect(set.has(2)).to.be.false()
+  })
+
+  it('delete', () => {
+    const set = Set.of([1, 2, 3])
+
+    expect(set.has(1)).to.be.true()
+    expect(set.size()).to.equal(3)
+
+    set.delete(1)
+
+    expect(set.has(1)).to.be.false()
+    expect(set.size()).to.equal(2)
+  })
+
+  it('has', () => {
+    const set = Set.of([1])
+
+    expect(set.has(1)).to.be.true()
+
+    expect(set.has()).to.be.false()
+    expect(set.has(2)).to.be.false()
+    expect(set.has(null)).to.be.false()
+    expect(set.has(undefined)).to.be.false()
+  })
+
   it('isEmpty', () => {
     const set = new Set()
     expect(set.isEmpty()).to.be.true()
@@ -48,6 +83,29 @@ describe('Sets', () => {
     expect(marcus).to.equal({ id: 1, name: 'Marcus' })
   })
 
+  it('filter', () => {
+    const set = new Set()
+    set
+      .add({ id: 1, name: 'Marcus' })
+      .add({ id: 2, name: 'Norman' })
+      .add({ id: 3, name: 'Christian' })
+
+    expect(
+      set.filter((value) => {
+        return value.id < 3
+      }).toArray()
+    ).to.equal([
+      { id: 1, name: 'Marcus' },
+      { id: 2, name: 'Norman' }
+    ])
+
+    expect(
+      set.filter((value) => {
+        return value.id > 3
+      }).size()
+    ).to.equal(0)
+  })
+
   it('find', () => {
     const set = new Set()
     set
@@ -75,6 +133,22 @@ describe('Sets', () => {
       return value.name
     })
 
-    expect(users).to.equal(['Marcus', 'Norman', 'Christian'])
+    expect(users.has('Marcus')).be.true()
+    expect(users.toArray()).to.equal(['Marcus', 'Norman', 'Christian'])
+  })
+
+  it('values', () => {
+    const set = new Set()
+    set
+      .add({ id: 1, name: 'Marcus' })
+      .add({ id: 2, name: 'Norman' })
+      .add({ id: 3, name: 'Christian' })
+
+    const iterator = set.values()
+
+    expect(iterator.next().value.id).to.equal(1)
+    expect(iterator.next().value.id).to.equal(2)
+    expect(iterator.next().value.id).to.equal(3)
+    expect(iterator.next().value).to.be.undefined()
   })
 })

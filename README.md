@@ -8,7 +8,7 @@
     <h3>Sets</h3>
   </p>
   <p>
-    An extended <code>Set</code> class for Node.js
+    The <code>Set</code> class JavaScript should have shipped
   </p>
   <br/>
   <p>

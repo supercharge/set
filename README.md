@@ -45,7 +45,7 @@ npm i @supercharge/set
 
 
 ## Docs
-Find all the [details for `@supercharge/set` in the extensive Supercharge docs](https://superchargejs.com/docs/sets).
+Find all the [details for `@supercharge/set` in the extensive Supercharge docs](https://superchargejs.com/docs/set).
 
 
 ## Usage

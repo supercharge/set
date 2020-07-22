@@ -1,10 +1,13 @@
 {
-  "name": "@supercharge/sets",
-  "description": "An extended Set class for Node.js and JavaScript",
+  "name": "@supercharge/set",
+  "description": "The Set class JavaScript should have shipped",
   "version": "0.0.0",
   "author": "Marcus Pöhls <marcus@superchargejs.com>",
   "bugs": {
-    "url": "https://github.com/supercharge/sets/issues"
+    "url": "https://github.com/supercharge/set/issues"
+  },
+  "dependencies": {
+    "@supercharge/goodies": "~1.5.1"
   },
   "devDependencies": {
     "@hapi/code": "~7.0.0",
@@ -24,7 +27,7 @@
     "dist",
     "index.js"
   ],
-  "homepage": "https://github.com/supercharge/sets",
+  "homepage": "https://github.com/supercharge/set",
   "keywords": [
     "supercharge",
     "superchargejs",
@@ -38,7 +41,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/supercharge/sets.git"
+    "url": "git+https://github.com/supercharge/set.git"
   },
   "scripts": {
     "build": "tsc",

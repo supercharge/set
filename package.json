@@ -1,6 +1,6 @@
 {
   "name": "@supercharge/set",
-  "description": "The Set class JavaScript should have shipped",
+  "description": "An Array-aligned Set class and the one JavaScript should have shipped",
   "version": "1.0.0",
   "author": "Marcus Pöhls <marcus@superchargejs.com>",
   "bugs": {

@@ -2,7 +2,7 @@
 
 import { tap } from '@supercharge/goodies'
 
-export class SuperchargedSet<T> {
+export class SuperchargedSet<T> implements Iterable<T> {
   /**
    * Contains the items in the set.
    */
@@ -26,6 +26,15 @@ export class SuperchargedSet<T> {
    */
   static of<T> (values?: Iterable<T>): SuperchargedSet<T> {
     return new this<T>(values)
+  }
+
+  /**
+   * Returns an iterable of the values in the set.
+   *
+   * @returns {IterableIterator}
+   */
+  [Symbol.iterator] (): IterableIterator<T> {
+    return this.values()
   }
 
   /**

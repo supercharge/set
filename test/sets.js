@@ -151,4 +151,30 @@ describe('Sets', () => {
     expect(iterator.next().value.id).to.equal(3)
     expect(iterator.next().value).to.be.undefined()
   })
+
+  it('for..of', () => {
+    const iterable = Set.of([1, 1, 2, 2, 3, 3])
+    const array = []
+
+    for (const value of iterable) {
+      array.push(value)
+    }
+
+    expect(array).to.equal([1, 2, 3])
+  })
+
+  it('Symbol.iterator', () => {
+    const set = Set.of([1, 1, 2, 2, 3, 3])
+
+    const iterable = set[Symbol.iterator]()
+    expect(iterable.next).to.be.a.function()
+
+    const array = []
+
+    for (const value of iterable) {
+      array.push(value)
+    }
+
+    expect(array).to.equal([1, 2, 3])
+  })
 })

@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [1.2.0](https://github.com/supercharge/set/compare/v1.1.0...v1.2.0) - 2020-08-xx
+
+### Updated
+- devDependencies: move test runner from `@hapi/lab` to `jest`
+
+
 ## [1.1.0](https://github.com/supercharge/set/compare/v1.0.0...v1.1.0) - 2020-08-05
 
 ### Added

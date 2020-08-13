@@ -1,78 +1,74 @@
 'use strict'
 
-const Set = require('..')
-const Lab = require('@hapi/lab')
-const { expect } = require('@hapi/code')
-
-const { describe, it } = (exports.lab = Lab.script())
+const Set = require('../dist')
 
 describe('Sets', () => {
-  it('of', () => {
-    expect(Set.of().isEmpty()).to.be.true()
-    expect(Set.of([]).isEmpty()).to.be.true()
-    expect(Set.of(null).isEmpty()).to.be.true()
-    expect(Set.of(undefined).isEmpty()).to.be.true()
+  test('of', () => {
+    expect(Set.of().isEmpty()).toBe(true)
+    expect(Set.of([]).isEmpty()).toBe(true)
+    expect(Set.of(null).isEmpty()).toBe(true)
+    expect(Set.of(undefined).isEmpty()).toBe(true)
 
-    expect(Set.of([1, 2, 3]).isEmpty()).to.be.false()
-    expect(Set.of([1, 2, 3]).toArray()).to.equal([1, 2, 3])
+    expect(Set.of([1, 2, 3]).isEmpty()).toBe(false)
+    expect(Set.of([1, 2, 3]).toArray()).toEqual([1, 2, 3])
   })
 
-  it('clear', () => {
+  test('clear', () => {
     const set = Set.of([1, 2])
 
-    expect(set.size()).to.equal(2)
-    expect(set.has(2)).to.be.true()
+    expect(set.size()).toEqual(2)
+    expect(set.has(2)).toBe(true)
 
     set.clear()
 
-    expect(set.size()).to.equal(0)
-    expect(set.has(2)).to.be.false()
+    expect(set.size()).toEqual(0)
+    expect(set.has(2)).toBe(false)
   })
 
-  it('delete', () => {
+  test('delete', () => {
     const set = Set.of([1, 2, 3])
 
-    expect(set.has(1)).to.be.true()
-    expect(set.size()).to.equal(3)
+    expect(set.has(1)).toBe(true)
+    expect(set.size()).toEqual(3)
 
     set.delete(1)
 
-    expect(set.has(1)).to.be.false()
-    expect(set.size()).to.equal(2)
+    expect(set.has(1)).toBe(false)
+    expect(set.size()).toEqual(2)
   })
 
-  it('has', () => {
+  test('has', () => {
     const set = Set.of([1])
 
-    expect(set.has(1)).to.be.true()
+    expect(set.has(1)).toBe(true)
 
-    expect(set.has()).to.be.false()
-    expect(set.has(2)).to.be.false()
-    expect(set.has(null)).to.be.false()
-    expect(set.has(undefined)).to.be.false()
+    expect(set.has()).toBe(false)
+    expect(set.has(2)).toBe(false)
+    expect(set.has(null)).toBe(false)
+    expect(set.has(undefined)).toBe(false)
   })
 
-  it('isEmpty', () => {
+  test('isEmpty', () => {
     const set = new Set()
-    expect(set.isEmpty()).to.be.true()
+    expect(set.isEmpty()).toBe(true)
   })
 
-  it('isNotEmpty', () => {
+  test('isNotEmpty', () => {
     const set = new Set()
-    expect(set.isEmpty()).to.be.true()
+    expect(set.isEmpty()).toBe(true)
 
     set.add('Marcus')
-    expect(set.isNotEmpty()).to.be.true()
+    expect(set.isNotEmpty()).toBe(true)
   })
 
-  it('toArray', () => {
+  test('toArray', () => {
     const set = new Set()
     set
       .add({ id: 1, name: 'Marcus' })
       .add({ id: 2, name: 'Norman' })
       .add({ id: 3, name: 'Christian' })
 
-    expect(set.toArray).to.be.a.function()
+    expect(set.toArray).toBeInstanceOf(Function)
 
     const marcus = set
       .toArray()
@@ -80,10 +76,10 @@ describe('Sets', () => {
         return user.id === 1
       })
 
-    expect(marcus).to.equal({ id: 1, name: 'Marcus' })
+    expect(marcus).toEqual({ id: 1, name: 'Marcus' })
   })
 
-  it('filter', () => {
+  test('filter', () => {
     const set = new Set()
     set
       .add({ id: 1, name: 'Marcus' })
@@ -94,7 +90,7 @@ describe('Sets', () => {
       set.filter((value) => {
         return value.id < 3
       }).toArray()
-    ).to.equal([
+    ).toEqual([
       { id: 1, name: 'Marcus' },
       { id: 2, name: 'Norman' }
     ])
@@ -103,10 +99,10 @@ describe('Sets', () => {
       set.filter((value) => {
         return value.id > 3
       }).size()
-    ).to.equal(0)
+    ).toEqual(0)
   })
 
-  it('find', () => {
+  test('find', () => {
     const set = new Set()
     set
       .add({ id: 1, name: 'Marcus' })
@@ -115,14 +111,14 @@ describe('Sets', () => {
 
     expect(
       set.find((value) => value.name === 'Marcus')
-    ).to.equal({ id: 1, name: 'Marcus' })
+    ).toEqual({ id: 1, name: 'Marcus' })
 
     expect(
       set.find((value) => value.name === 'Supercharge')
-    ).to.be.undefined()
+    ).toBeUndefined()
   })
 
-  it('map', () => {
+  test('map', () => {
     const set = new Set()
     set
       .add({ id: 1, name: 'Marcus' })
@@ -133,11 +129,11 @@ describe('Sets', () => {
       return value.name
     })
 
-    expect(users.has('Marcus')).be.true()
-    expect(users.toArray()).to.equal(['Marcus', 'Norman', 'Christian'])
+    expect(users.has('Marcus')).toBe(true)
+    expect(users.toArray()).toEqual(['Marcus', 'Norman', 'Christian'])
   })
 
-  it('values', () => {
+  test('values', () => {
     const set = new Set()
     set
       .add({ id: 1, name: 'Marcus' })
@@ -146,13 +142,13 @@ describe('Sets', () => {
 
     const iterator = set.values()
 
-    expect(iterator.next().value.id).to.equal(1)
-    expect(iterator.next().value.id).to.equal(2)
-    expect(iterator.next().value.id).to.equal(3)
-    expect(iterator.next().value).to.be.undefined()
+    expect(iterator.next().value.id).toEqual(1)
+    expect(iterator.next().value.id).toEqual(2)
+    expect(iterator.next().value.id).toEqual(3)
+    expect(iterator.next().value).toBeUndefined()
   })
 
-  it('for..of', () => {
+  test('for..of', () => {
     const iterable = Set.of([1, 1, 2, 2, 3, 3])
     const array = []
 
@@ -160,14 +156,14 @@ describe('Sets', () => {
       array.push(value)
     }
 
-    expect(array).to.equal([1, 2, 3])
+    expect(array).toEqual([1, 2, 3])
   })
 
-  it('Symbol.iterator', () => {
+  test('Symbol.iterator', () => {
     const set = Set.of([1, 1, 2, 2, 3, 3])
 
     const iterable = set[Symbol.iterator]()
-    expect(iterable.next).to.be.a.function()
+    expect(iterable.next).toBeInstanceOf(Function)
 
     const array = []
 
@@ -175,6 +171,6 @@ describe('Sets', () => {
       array.push(value)
     }
 
-    expect(array).to.equal([1, 2, 3])
+    expect(array).toEqual([1, 2, 3])
   })
 })

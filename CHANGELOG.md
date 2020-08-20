@@ -4,6 +4,7 @@
 ## [1.2.0](https://github.com/supercharge/set/compare/v1.1.0...v1.2.0) - 2020-08-xx
 
 ### Updated
+- bump dependencies
 - change `main` entrypoint in `package.json` to `dist` folder
 - devDependencies: move test runner from `@hapi/lab` to `jest`
 

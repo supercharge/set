@@ -47,11 +47,8 @@
     "dev": "tsc --watch",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
-    "list:tests": "lab --assert @hapi/code --dry --verbose",
     "test": "npm run build && npm run lint && npm run test:run",
-    "test:run": "jest",
-    "test:run:lab": "lab --assert @hapi/code --leaks --coverage --reporter console --output stdout --reporter html --output ./coverage/coverage.html",
-    "test:single": "lab --assert @hapi/code --leaks --lint --id"
+    "test:run": "jest"
   },
   "types": "dist"
 }

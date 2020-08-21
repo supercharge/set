@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.2.0](https://github.com/supercharge/set/compare/v1.1.0...v1.2.0) - 2020-08-xx
+## [1.2.0](https://github.com/supercharge/set/compare/v1.1.0...v1.2.0) - 2020-08-21
 
 ### Updated
 - bump dependencies

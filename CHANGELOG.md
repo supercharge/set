@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [1.3.0](https://github.com/supercharge/set/compare/v1.2.0...v1.3.0) - 2020-08-xx
+
+### Added
+- generate HTML coverage report from jest
+
+
 ## [1.2.0](https://github.com/supercharge/set/compare/v1.1.0...v1.2.0) - 2020-08-21
 
 ### Updated

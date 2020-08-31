@@ -37,6 +37,14 @@ describe('Sets', () => {
     expect(set.size()).toEqual(2)
   })
 
+  test('flatten', () => {
+    const set = Set.of([[1], 1, 22, true, [{}, 'Marcus', true], [22]]).flatten()
+
+    expect(set.toArray()).toEqual(
+      [1, 22, true, {}, 'Marcus']
+    )
+  })
+
   test('has', () => {
     const set = Set.of([1])
 
@@ -131,6 +139,20 @@ describe('Sets', () => {
 
     expect(users.has('Marcus')).toBe(true)
     expect(users.toArray()).toEqual(['Marcus', 'Norman', 'Christian'])
+  })
+
+  test('flatMap', () => {
+    const set = new Set()
+    set
+      .add({ id: 1, name: 'Marcus', tags: ['javascript', 'node', 'hapi', ['pm2', 'server']] })
+      .add({ id: 2, name: 'Norman', tags: ['python', 'node', 'android'] })
+      .add({ id: 3, name: 'Christian', tags: ['javascript', 'node'] })
+
+    const tags = set.flatMap((value) => {
+      return value.tags
+    })
+
+    expect(tags.toArray()).toEqual(['javascript', 'node', 'hapi', ['pm2', 'server'], 'python', 'android'])
   })
 
   test('values', () => {

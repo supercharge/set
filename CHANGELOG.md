@@ -1,9 +1,11 @@
 # Changelog
 
 
-## [1.3.0](https://github.com/supercharge/set/compare/v1.2.0...v1.3.0) - 2020-08-xx
+## [1.3.0](https://github.com/supercharge/set/compare/v1.2.0...v1.3.0) - 2020-08-31
 
 ### Added
+- `flatten()` method: flatten the set one level deep
+- `flatMap(transform)` method: returns a new set instance from applying the given `transform` function on each item in the source set and ultimately collapsing the result
 - generate HTML coverage report from jest
 
 

@@ -73,6 +73,17 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
+   * Flattens the items in the set one level deep.
+   *
+   * @returns {SuperchargedSet}
+   */
+  flatten (): SuperchargedSet<T> {
+    return SuperchargedSet.of(
+      ([] as T[]).concat(...this.toArray())
+    )
+  }
+
+  /**
    * Determine whether the set contains the given `value`.
    *
    * @param {*} value
@@ -163,6 +174,21 @@ export class SuperchargedSet<T> implements Iterable<T> {
     })
 
     return results
+  }
+
+  /**
+   * Returns a new set instance containing the results of applying the
+   * given `transform` function to each item in the set. Ultimately,
+   * it flattens the mapped results one level deep.
+   *
+   * @param {Function} transform
+   *
+   * @returns {Array}
+   */
+  flatMap<R> (transform: (item: T, set: SuperchargedSet<T>) => R): SuperchargedSet<R> {
+    return this.map<R>((item: T) => {
+      return transform(item, this)
+    }).flatten()
   }
 
   /**

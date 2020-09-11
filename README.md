@@ -8,7 +8,7 @@
     <h3>Set</h3>
   </p>
   <p>
-    The <code>Set</code> class JavaScript should have shipped
+    An Array-aligned <code>Set</code> class and the one JavaScript should have shipped
   </p>
   <br/>
   <p>

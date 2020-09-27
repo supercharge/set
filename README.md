@@ -63,20 +63,19 @@ users
   .add({ id: 1, name: 'Marcus' })
   .add({ id: 2, name: 'Norman' })
   .add({ id: 3, name: 'Christian' })
+  .add({ id: 4, name: 'Marcus' })
 
 users.isNotEmpty()
 // true
 
-const asArray = users.map(user => {
+const usernames = users.map(user => {
   return user.name
 })
-
 // [ 'Marcus', 'Norman', 'Christian' ]
 
 const marcus = users.find(user => {
   return user.name === 'Marcus'
 })
-
 // { id: 1, name: 'Marcus' }
 ```
 

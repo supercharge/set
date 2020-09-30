@@ -195,4 +195,11 @@ describe('Sets', () => {
 
     expect(array).toEqual([1, 2, 3])
   })
+
+  test('reduce', () => {
+    const set = Set.of([1, 2, 3, 4, 5])
+
+    expect(set.reduce((sum, value) => sum + value, 5)).toBe(10)
+    expect(set.reduce((sum, value) => sum + value, 15)).toBe(15)
+  })
 })

@@ -56,6 +56,25 @@ describe('Sets', () => {
     expect(set.has(undefined)).toBe(false)
   })
 
+  test('includes', () => {
+    const set = Set.of([1, 2, 3, 4, 5])
+
+    expect(set.includes(1)).toBe(true)
+
+    expect(set.includes()).toBe(false)
+    expect(set.includes(6)).toBe(false)
+    expect(set.includes(null)).toBe(false)
+    expect(set.includes(undefined)).toBe(false)
+
+    expect(set.includes(value => {
+      return value > 3
+    })).toBe(true)
+
+    expect(set.includes(value => {
+      return value === 0
+    })).toBe(false)
+  })
+
   test('isEmpty', () => {
     const set = new Set()
     expect(set.isEmpty()).toBe(true)

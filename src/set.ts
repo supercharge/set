@@ -225,15 +225,9 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @returns {SuperchargedSet}
    */
-  concat (...values: Array<T | T[]>): this {
-    for (const value of values) {
-      if (Array.isArray(value)) {
-        value.forEach(this.add, this)
-      } else {
-        this.add(value)
-      }
-    }
+  concat (...values: Array<T | T[]>): SuperchargedSet<T> {
+    const concatValues = this.toArray().concat(...values)
 
-    return this
+    return new SuperchargedSet<T>(concatValues)
   }
 }

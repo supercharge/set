@@ -209,4 +209,18 @@ describe('Sets', () => {
       Set.of([1, 2, 3]).concat(4, 5).toArray()
     ).toEqual([1, 2, 3, 4, 5])
   })
+
+  test('count', () => {
+    expect(
+      Set.of([1, 2, 3, 4, 5]).count(value => {
+        return value > 3
+      })
+    ).toEqual(2)
+
+    expect(
+      Set.of([1, 2, 3, 4, 5]).count(value => {
+        return value > 5
+      })
+    ).toEqual(0)
+  })
 })

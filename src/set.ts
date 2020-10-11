@@ -217,4 +217,23 @@ export class SuperchargedSet<T> implements Iterable<T> {
   toArray (): T[] {
     return Array.from(this.set)
   }
+
+  /**
+   * Returns the number of items matching the given predicate.
+   *
+   * @param {Function} predicate
+   *
+   * @returns {number}
+   */
+  count (predicate: (item: T) => boolean): number {
+    let count = 0
+
+    for (const value of this.set.values()) {
+      if (predicate(value)) {
+        count++
+      }
+    }
+
+    return count
+  }
 }

@@ -219,6 +219,19 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
+   * Appends values to the end of the array.
+   *
+   * @param {*} values
+   *
+   * @returns {SuperchargedSet}
+   */
+  concat (...values: Array<T | T[]>): SuperchargedSet<T> {
+    const concatValues = this.toArray().concat(...values)
+
+    return new SuperchargedSet<T>(concatValues)
+  }
+
+  /**
    * Returns the number of items matching the given predicate.
    *
    * @param {Function} predicate

@@ -196,6 +196,20 @@ describe('Sets', () => {
     expect(array).toEqual([1, 2, 3])
   })
 
+  test('concat', () => {
+    expect(
+      Set.of([1, 2, 3]).concat([4, 5]).toArray()
+    ).toEqual([1, 2, 3, 4, 5])
+
+    expect(
+      Set.of([1, 2, 3]).concat([4, 5], [6, 7]).toArray()
+    ).toEqual([1, 2, 3, 4, 5, 6, 7])
+
+    expect(
+      Set.of([1, 2, 3]).concat(4, 5).toArray()
+    ).toEqual([1, 2, 3, 4, 5])
+  })
+
   test('count', () => {
     expect(
       Set.of([1, 2, 3, 4, 5]).count(value => {

@@ -217,4 +217,23 @@ export class SuperchargedSet<T> implements Iterable<T> {
   toArray (): T[] {
     return Array.from(this.set)
   }
+
+  /**
+   * Appends values to the end of the array.
+   *
+   * @param {*} values
+   *
+   * @returns {SuperchargedSet}
+   */
+  concat (...values: Array<T | T[]>): this {
+    for (const value of values) {
+      if (Array.isArray(value)) {
+        value.forEach(this.add, this)
+      } else {
+        this.add(value)
+      }
+    }
+
+    return this
+  }
 }

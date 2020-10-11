@@ -225,15 +225,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @returns {number}
    */
-  count (predicate: (item: T) => boolean): number {
-    let count = 0
-
-    for (const value of this.set.values()) {
-      if (predicate(value)) {
-        count++
-      }
-    }
-
-    return count
+  count (predicate: (item: T) => T[]): number {
+    return this.filter(predicate).size()
   }
 }

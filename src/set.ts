@@ -119,7 +119,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @returns {SuperchargedSet}
    */
-  filter (predicate: (item: T, set: SuperchargedSet<T>) => T[]): SuperchargedSet<T> {
+  filter<S extends T> (predicate: (item: T, set: SuperchargedSet<T>) => item is S): SuperchargedSet<T> {
     const results: SuperchargedSet<T> = new SuperchargedSet()
 
     for (const value of this.set.values()) {
@@ -194,7 +194,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
   /**
    * Returns the size of the set.
    *
-   * @returns {number}
+   * @returns {Number}
    */
   size (): number {
     return this.set.size
@@ -212,7 +212,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
   /**
    * Transforms this set into an array.
    *
-   * @returns Array
+   * @returns {Array}
    */
   toArray (): T[] {
     return Array.from(this.set)
@@ -232,13 +232,13 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
-   * Returns the number of items matching the given predicate.
+   * Returns the number of items matching the given `predicate`.
    *
    * @param {Function} predicate
    *
-   * @returns {number}
+   * @returns {Number}
    */
-  count (predicate: (item: T) => T[]): number {
+  count<S extends T> (predicate: (item: T) => item is S): number {
     return this.filter(predicate).size()
   }
 }

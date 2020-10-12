@@ -212,15 +212,16 @@ describe('Sets', () => {
 
   test('count', () => {
     expect(
-      Set.of([1, 2, 3, 4, 5]).count(value => {
-        return value > 3
-      })
+      Set
+        .of([1, 2, 3, 4, 5])
+        .map(num => num * 2)
+        .count(value => value > 6)
     ).toEqual(2)
 
     expect(
-      Set.of([1, 2, 3, 4, 5]).count(value => {
-        return value > 5
-      })
+      Set
+        .of([1, 2, 3, 4, 5])
+        .count(num => num > 5)
     ).toEqual(0)
   })
 })

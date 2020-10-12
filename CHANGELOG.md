@@ -1,6 +1,17 @@
 # Changelog
 
 
+## [1.4.0](https://github.com/supercharge/set/compare/v1.3.0...v1.4.0) - 2020-10-12
+
+### Added
+- `concat(...values)` method: add an array or individual values to a set
+- `count(predicate)` method: returns the number of items matching the given `predicate` function
+
+### Updated
+- bump dependencies
+- refine package description in README
+
+
 ## [1.3.0](https://github.com/supercharge/set/compare/v1.2.0...v1.3.0) - 2020-08-31
 
 ### Added

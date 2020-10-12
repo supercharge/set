@@ -170,7 +170,9 @@ export class SuperchargedSet<T> implements Iterable<T> {
     const results: SuperchargedSet<R> = new SuperchargedSet()
 
     this.forEach((item) => {
-      results.add(transform(item, this))
+      results.add(
+        transform(item, this)
+      )
     })
 
     return results
@@ -226,9 +228,9 @@ export class SuperchargedSet<T> implements Iterable<T> {
    * @returns {SuperchargedSet}
    */
   concat (...values: Array<T | T[]>): SuperchargedSet<T> {
-    const concatValues = this.toArray().concat(...values)
-
-    return new SuperchargedSet<T>(concatValues)
+    return new SuperchargedSet<T>(
+      this.toArray().concat(...values)
+    )
   }
 
   /**

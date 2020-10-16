@@ -202,4 +202,32 @@ describe('Sets', () => {
     expect(set.reduce((sum, value) => sum + value, 0)).toBe(15)
     expect(set.reduce((sum, value) => sum + value, 5)).toBe(20)
   })
+  test('concat', () => {
+    expect(
+      Set.of([1, 2, 3]).concat([4, 5]).toArray()
+    ).toEqual([1, 2, 3, 4, 5])
+
+    expect(
+      Set.of([1, 2, 3]).concat([4, 5], [6, 7]).toArray()
+    ).toEqual([1, 2, 3, 4, 5, 6, 7])
+
+    expect(
+      Set.of([1, 2, 3]).concat(4, 5).toArray()
+    ).toEqual([1, 2, 3, 4, 5])
+  })
+
+  test('count', () => {
+    expect(
+      Set
+        .of([1, 2, 3, 4, 5])
+        .map(num => num * 2)
+        .count(value => value > 6)
+    ).toEqual(2)
+
+    expect(
+      Set
+        .of([1, 2, 3, 4, 5])
+        .count(num => num > 5)
+    ).toEqual(0)
+  })
 })

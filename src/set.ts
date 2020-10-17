@@ -95,6 +95,28 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
+   * Returns true if an item in the set matches
+   * the given `value` or `predicate`
+   *
+   * @param {Function|T} valueOrPredicate
+   *
+   * @returns {boolean}
+   */
+  includes (value: T): boolean
+  includes (predicate: ((item: T) => boolean)): boolean
+  includes (valueOrPredicate: T | ((item: T) => boolean)): boolean {
+    if (typeof valueOrPredicate !== 'function') return this.has(valueOrPredicate)
+
+    for (const value of this.set.values()) {
+      if ((valueOrPredicate as ((item: T) => boolean))(value)) {
+        return true
+      }
+    }
+
+    return false
+  }
+
+  /**
    * Determine whether the set is empty (contains no entries).
    *
    * @returns {Boolean}

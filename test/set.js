@@ -66,13 +66,18 @@ describe('Sets', () => {
     expect(set.includes(null)).toBe(false)
     expect(set.includes(undefined)).toBe(false)
 
-    expect(set.includes(value => {
-      return value > 3
-    })).toBe(true)
+    expect(
+      set.includes(value => value > 3)
+    ).toBe(true)
+    expect(
+      set
+        .map(value => value * 2)
+        .includes(value => value > 6)
+    ).toBe(true)
 
-    expect(set.includes(value => {
-      return value === 0
-    })).toBe(false)
+    expect(
+      set.includes(value => value === 0)
+    ).toBe(false)
   })
 
   test('isEmpty', () => {
@@ -130,11 +135,11 @@ describe('Sets', () => {
   })
 
   test('find', () => {
-    const set = new Set()
-    set
-      .add({ id: 1, name: 'Marcus' })
-      .add({ id: 2, name: 'Norman' })
-      .add({ id: 3, name: 'Christian' })
+    const set = Set.of([
+      { id: 1, name: 'Marcus' },
+      { id: 2, name: 'Norman' },
+      { id: 3, name: 'Christian' }
+    ])
 
     expect(
       set.find((value) => value.name === 'Marcus')

@@ -103,17 +103,15 @@ export class SuperchargedSet<T> implements Iterable<T> {
    * @returns {boolean}
    */
   includes (value: T): boolean
-  includes (predicate: ((item: T) => boolean)): boolean
+  includes (predicate: (item: T) => boolean): boolean
   includes (valueOrPredicate: T | ((item: T) => boolean)): boolean {
-    if (typeof valueOrPredicate !== 'function') return this.has(valueOrPredicate)
-
-    for (const value of this.set.values()) {
-      if ((valueOrPredicate as ((item: T) => boolean))(value)) {
-        return true
-      }
+    if (typeof valueOrPredicate !== 'function') {
+      return this.has(valueOrPredicate)
     }
 
-    return false
+    return !!this.find(item => {
+      return (valueOrPredicate as ((item: T) => boolean))(item)
+    })
   }
 
   /**
@@ -144,7 +142,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
   filter<S extends T> (predicate: (item: T, set: SuperchargedSet<T>) => item is S): SuperchargedSet<T> {
     const results: SuperchargedSet<T> = new SuperchargedSet()
 
-    for (const value of this.set.values()) {
+    for (const value of this.values()) {
       if (predicate(value, this)) {
         results.add(value)
       }
@@ -161,8 +159,10 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @returns {*}
    */
-  find (predicate: (item: T, set: SuperchargedSet<T>) => T | undefined): T | undefined {
-    for (const value of this.set.values()) {
+  find (predicate: (item: T, set: SuperchargedSet<T>) => unknown): T | undefined
+  find<S extends T> (predicate: (item: T, set: SuperchargedSet<T>) => item is S): S | undefined
+  find (predicate: (item: T, set: SuperchargedSet<T>) => unknown): T | undefined {
+    for (const value of this.values()) {
       if (predicate(value, this)) {
         return value
       }

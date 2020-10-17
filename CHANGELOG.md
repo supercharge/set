@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.5.0](https://github.com/supercharge/set/compare/v1.4.0...v1.5.0) - 2020-10-xx
+## [1.5.0](https://github.com/supercharge/set/compare/v1.4.0...v1.5.0) - 2020-10-17
 
 ### Added
 - `includes(value|predicate)` method: determine whether the set includes a given `value` or check if it includes a value by using a `predicate` function

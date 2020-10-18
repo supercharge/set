@@ -220,10 +220,14 @@ export class SuperchargedSet<T> implements Iterable<T> {
     return Array.from(this.set)
   }
 
-  reduce (operation: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue: T): T {
-    return this.toArray().reduce(operation, initialValue)
+  reduce<U>(operation: (previous: U, current: T, set: SuperchargedSet<T>) => U, initial: U): U {
+    if (!initial && this.set.size === 0) throw new TypeError('Reduce of empty set with no initial value')
+    let rv = initial
+    for (const value of this.set.values()) {
+      rv = operation(rv, value, this)
+    }
+    return rv
   }
-
   /**
    * Appends values to the end of the array.
    *

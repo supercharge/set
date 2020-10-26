@@ -203,7 +203,7 @@ describe('Sets', () => {
     expect(set.reduce((sum, value) => sum + value, 0)).toBe(15)
     expect(set.reduce((sum, value) => sum + value, 5)).toBe(20)
     expect(emptySet.reduce((sum, value) => sum + value, 5)).toBe(5)
-    expect(emptySet.reduce((sum, value) => sum + value)).toThrowError(TypeError)
+    expect(set.reduce((sum, value) => sum + value)).toThrow(TypeError)
 
   })
 

@@ -198,10 +198,15 @@ describe('Sets', () => {
 
   test('reduce', () => {
     const set = Set.of([1, 2, 3, 4, 5])
+    const emptySet = Set.of([])
 
     expect(set.reduce((sum, value) => sum + value, 0)).toBe(15)
     expect(set.reduce((sum, value) => sum + value, 5)).toBe(20)
+    expect(emptySet.reduce((sum, value) => sum + value, 5)).toBe(5)
+    expect(emptySet.reduce((sum, value) => sum + value)).toThrowError(TypeError)
+
   })
+
   test('concat', () => {
     expect(
       Set.of([1, 2, 3]).concat([4, 5]).toArray()

@@ -1,6 +1,15 @@
 # Changelog
 
 
+## [1.7.0](https://github.com/supercharge/set/compare/v1.6.0...v1.7.0) - 2020-10-xx
+
+### Added
+- `first(predicate?)` method: returns the first item in the set or the first item matching the given `predicate` function
+
+### Updated
+- bump dependencies
+
+
 ## [1.6.0](https://github.com/supercharge/set/compare/v1.5.0...v1.6.0) - 2020-10-27
 
 ### Added
@@ -8,7 +17,7 @@
 
 ### Updated
 - bump dependencies
-- improve typings of `.filter()` method
+- improve typings of the `.filter()` method
 
 
 ## [1.5.0](https://github.com/supercharge/set/compare/v1.4.0...v1.5.0) - 2020-10-17
@@ -18,7 +27,7 @@
 
 ### Updated
 - bump dependencies
-- improve typings of `.find()` method
+- improve typings of the `.find()` method
 
 
 ## [1.4.0](https://github.com/supercharge/set/compare/v1.3.0...v1.4.0) - 2020-10-12

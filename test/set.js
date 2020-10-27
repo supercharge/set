@@ -150,6 +150,17 @@ describe('Sets', () => {
     ).toBeUndefined()
   })
 
+  test('forEach', () => {
+    const set = Set.of([1, 2, 3])
+
+    const result = set.forEach((value, originalSet) => {
+      expect(originalSet).toBe(set)
+      return value.name
+    })
+
+    expect(result).toBe(undefined)
+  })
+
   test('map', () => {
     const set = new Set()
     set
@@ -222,13 +233,21 @@ describe('Sets', () => {
 
   test('reduce', () => {
     const set = Set.of([1, 2, 3, 4, 5])
-    const emptySet = Set.of([])
+    expect(set.reduce((sum, value) => sum + value)).toBe(NaN)
 
     expect(set.reduce((sum, value) => sum + value, 0)).toBe(15)
     expect(set.reduce((sum, value) => sum + value, 5)).toBe(20)
-    expect(emptySet.reduce((sum, value) => sum + value, 5)).toBe(5)
-    expect(() => set.reduce((sum, value) => sum + value)).toThrow(TypeError)
 
+    const emptySet = Set.of([])
+    expect(emptySet.reduce((sum, value) => sum + value, 5)).toBe(5)
+
+    expect(() => Set.of([1, 2, 3]).reduce((sum, value) => {
+      if (value === 2) {
+        throw new TypeError('failed')
+      }
+
+      return sum + value
+    }, 5)).toThrow(TypeError)
   })
 
   test('concat', () => {

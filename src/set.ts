@@ -62,6 +62,30 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
+   * Appends values to the end of the array.
+   *
+   * @param {*} values
+   *
+   * @returns {SuperchargedSet}
+   */
+  concat (...values: Array<T | T[]>): SuperchargedSet<T> {
+    return SuperchargedSet.of(
+      this.toArray().concat(...values)
+    )
+  }
+
+  /**
+   * Returns the number of items matching the given `predicate`.
+   *
+   * @param {Function} predicate
+   *
+   * @returns {Number}
+   */
+  count<S extends T> (predicate: (item: T) => item is S): number {
+    return this.filter(predicate).size()
+  }
+
+  /**
    * Delete the given `value` from the set.
    *
    * @param {*} value
@@ -73,6 +97,54 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
+   * Returns a set containing only items matching the given `predicate`.
+   *
+   * @param {Function} predicate
+   *
+   * @returns {SuperchargedSet}
+   */
+  filter (predicate: (item: T, set: SuperchargedSet<T>) => unknown): SuperchargedSet<T>
+  filter<S extends T> (predicate: (item: T, set: SuperchargedSet<T>) => item is S): SuperchargedSet<T>
+  filter (predicate: (item: T, set: SuperchargedSet<T>) => unknown): SuperchargedSet<T> {
+    return SuperchargedSet.of(
+      this.toArray().filter(value => {
+        return predicate(value, this)
+      })
+    )
+  }
+
+  /**
+   * Returns the first item in the set matching the given `predicate`
+   * function, or `undefined` if no such item was found.
+   *
+   * @param {Function} predicate
+   *
+   * @returns {*}
+   */
+  find (predicate: (item: T, set: SuperchargedSet<T>) => unknown): T | undefined
+  find<S extends T> (predicate: (item: T, set: SuperchargedSet<T>) => item is S): S | undefined
+  find (predicate: (item: T, set: SuperchargedSet<T>) => unknown): T | undefined {
+    return this.toArray().find(value => {
+      return predicate(value, this)
+    })
+  }
+
+  /**
+   * Returns a new set instance containing the results of applying the
+   * given `transform` function to each item in the set. Ultimately,
+   * it flattens the mapped results one level deep.
+   *
+   * @param {Function} transform
+   *
+   * @returns {Array}
+   */
+  flatMap<R> (transform: (item: T, set: SuperchargedSet<T>) => R): SuperchargedSet<R> {
+    return this.map<R>((item: T) => {
+      return transform(item, this)
+    }).flatten()
+  }
+
+  /**
    * Flattens the items in the set one level deep.
    *
    * @returns {SuperchargedSet}
@@ -81,6 +153,17 @@ export class SuperchargedSet<T> implements Iterable<T> {
     return SuperchargedSet.of(
       ([] as T[]).concat(...this.toArray())
     )
+  }
+
+  /**
+   * Runs the given `action` on each item in the set.
+   *
+   * @param {Function} action
+   */
+  forEach (action: (item: T, set: SuperchargedSet<T>) => void): void {
+    this.set.forEach((value: T) => {
+      action(value, this)
+    })
   }
 
   /**
@@ -133,54 +216,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
-   * Returns a set containing only items matching the given `predicate`.
-   *
-   * @param {Function} predicate
-   *
-   * @returns {SuperchargedSet}
-   */
-  filter<S extends T> (predicate: (item: T, set: SuperchargedSet<T>) => item is S): SuperchargedSet<T> {
-    const results: SuperchargedSet<T> = new SuperchargedSet()
-
-    for (const value of this.values()) {
-      if (predicate(value, this)) {
-        results.add(value)
-      }
-    }
-
-    return results
-  }
-
-  /**
-   * Returns the first item in the set matching the given `predicate`
-   * function, or `undefined` if no such item was found.
-   *
-   * @param {Function} predicate
-   *
-   * @returns {*}
-   */
-  find (predicate: (item: T, set: SuperchargedSet<T>) => unknown): T | undefined
-  find<S extends T> (predicate: (item: T, set: SuperchargedSet<T>) => item is S): S | undefined
-  find (predicate: (item: T, set: SuperchargedSet<T>) => unknown): T | undefined {
-    for (const value of this.values()) {
-      if (predicate(value, this)) {
-        return value
-      }
-    }
-  }
-
-  /**
-   * Runs the given `action` on each item in the set.
-   *
-   * @param {Function} action
-   */
-  forEach (action: (item: T, set: SuperchargedSet<T>) => void): void {
-    this.set.forEach((value: T) => {
-      action(value, this)
-    })
-  }
-
-  /**
    * Returns a new set instance containing the results of applying the
    * given `transform` function to each item in the set.
    *
@@ -189,30 +224,27 @@ export class SuperchargedSet<T> implements Iterable<T> {
    * @returns {Array}
    */
   map<R> (transform: (item: T, set: SuperchargedSet<T>) => R): SuperchargedSet<R> {
-    const results: SuperchargedSet<R> = new SuperchargedSet()
-
-    this.forEach((item) => {
-      results.add(
-        transform(item, this)
-      )
-    })
-
-    return results
+    return SuperchargedSet.of(
+      this.toArray().map(value => {
+        return transform(value, this)
+      })
+    )
   }
 
   /**
-   * Returns a new set instance containing the results of applying the
-   * given `transform` function to each item in the set. Ultimately,
-   * it flattens the mapped results one level deep.
+   * Invokes the `operation` function on each item in the set. The return value
+   * of the operation function is the accumulated result, and is provided as
+   * an argument in the next call to the operation function.
    *
-   * @param {Function} transform
+   * @param operation
+   * @param initial
    *
-   * @returns {Array}
+   * @returns {*}
    */
-  flatMap<R> (transform: (item: T, set: SuperchargedSet<T>) => R): SuperchargedSet<R> {
-    return this.map<R>((item: T) => {
-      return transform(item, this)
-    }).flatten()
+  reduce<U>(operation: (previous: U, current: T, set: SuperchargedSet<T>) => U, initial: U): U {
+    return this.toArray().reduce((carry: U, value: T) => {
+      return operation(carry, value, this)
+    }, initial)
   }
 
   /**
@@ -225,15 +257,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
-   * Returns an iterable of values in the set.
-   *
-   * @returns {IterableIterator}
-   */
-  values (): IterableIterator<T> {
-    return this.set.values()
-  }
-
-  /**
    * Transforms this set into an array.
    *
    * @returns {Array}
@@ -242,37 +265,12 @@ export class SuperchargedSet<T> implements Iterable<T> {
     return Array.from(this.set)
   }
 
-  reduce<U>(operation: (previous: U, current: T, set: SuperchargedSet<T>) => U, initial: U): U {
-    if (this.isEmpty()) return initial
-    if (initial === undefined && this.isNotEmpty()) throw new TypeError('Reduce of set with no initial value')
-    let rv = initial
-    for (const value of this.set.values()) {
-      rv = operation(rv, value, this)
-    }
-    return rv
-  }
-
   /**
-   * Appends values to the end of the array.
+   * Returns an iterable of values in the set.
    *
-   * @param {*} values
-   *
-   * @returns {SuperchargedSet}
+   * @returns {IterableIterator}
    */
-  concat (...values: Array<T | T[]>): SuperchargedSet<T> {
-    return new SuperchargedSet<T>(
-      this.toArray().concat(...values)
-    )
-  }
-
-  /**
-   * Returns the number of items matching the given `predicate`.
-   *
-   * @param {Function} predicate
-   *
-   * @returns {Number}
-   */
-  count<S extends T> (predicate: (item: T) => item is S): number {
-    return this.filter(predicate).size()
+  values (): IterableIterator<T> {
+    return this.set.values()
   }
 }

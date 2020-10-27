@@ -278,4 +278,20 @@ describe('Sets', () => {
         .count(num => num > 5)
     ).toEqual(0)
   })
+
+  test('first', () => {
+    expect(
+      Set
+        .of([1, 2, 3])
+        .first()
+    ).toEqual(1)
+
+    expect(
+      Set
+        .of([1, 2, 3, 4, 5])
+        .first(value => {
+          return value > 3
+        })
+    ).toEqual(4)
+  })
 })

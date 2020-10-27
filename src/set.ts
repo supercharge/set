@@ -167,6 +167,23 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
+   * Returns the first element of the set or returns the first item
+   * in the set matching the given `predicate`function, or `undefined`
+   * if no such item was found.
+   *
+   * @param {Function} predicate
+   *
+   * @returns {*}
+   */
+  first (predicate?: (item: T, set: SuperchargedSet<T>) => unknown): T | undefined {
+    if (predicate !== undefined) {
+      return this.find(predicate)
+    }
+
+    return this.toArray()[0]
+  }
+
+  /**
    * Determine whether the set contains the given `value`.
    *
    * @param {*} value

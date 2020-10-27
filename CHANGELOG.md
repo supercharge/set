@@ -1,6 +1,16 @@
 # Changelog
 
 
+## [1.6.0](https://github.com/supercharge/set/compare/v1.5.0...v1.6.0) - 2020-10-27
+
+### Added
+- `reduce()` method: works the same way as in arrays :)
+
+### Updated
+- bump dependencies
+- improve typings of `.filter()` method
+
+
 ## [1.5.0](https://github.com/supercharge/set/compare/v1.4.0...v1.5.0) - 2020-10-17
 
 ### Added

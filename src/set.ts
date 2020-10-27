@@ -130,6 +130,21 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
+   * Returns the first element of the set or returns the first item in
+   * the set matching the given `predicate` function. Returns
+   * `undefined` if no matching item is found or available.
+   *
+   * @param {Function} predicate
+   *
+   * @returns {*}
+   */
+  first (predicate?: (item: T, set: SuperchargedSet<T>) => unknown): T | undefined {
+    return predicate
+      ? this.find(predicate)
+      : this.toArray()[0]
+  }
+
+  /**
    * Returns a new set instance containing the results of applying the
    * given `transform` function to each item in the set. Ultimately,
    * it flattens the mapped results one level deep.
@@ -164,23 +179,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
     this.set.forEach((value: T) => {
       action(value, this)
     })
-  }
-
-  /**
-   * Returns the first element of the set or returns the first item
-   * in the set matching the given `predicate`function, or `undefined`
-   * if no such item was found.
-   *
-   * @param {Function} predicate
-   *
-   * @returns {*}
-   */
-  first (predicate?: (item: T, set: SuperchargedSet<T>) => unknown): T | undefined {
-    if (predicate !== undefined) {
-      return this.find(predicate)
-    }
-
-    return this.toArray()[0]
   }
 
   /**

@@ -157,11 +157,11 @@ export class SuperchargedSet<T> implements Iterable<T> {
   last (predicate?: (item: T, set: SuperchargedSet<T>) => unknown): T | undefined {
     if (predicate) {
       return SuperchargedSet.of(
-        this.toReverseArray()
-      ).find(predicate)
+        this.toArray()
+      ).reverse().find(predicate)
     }
 
-    return this.toReverseArray()[0]
+    return this.toArray().reverse()[0]
   }
 
   /**
@@ -283,6 +283,17 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
+   * Returns a set containing the items in reversed order.
+   *
+   * @returns {SuperchargedSet}
+   */
+  reverse (): SuperchargedSet<T> {
+    return SuperchargedSet.of(
+      this.toArray().reverse()
+    )
+  }
+
+  /**
    * Returns the size of the set.
    *
    * @returns {Number}
@@ -298,15 +309,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    */
   toArray (): T[] {
     return Array.from(this.set)
-  }
-
-  /**
-   * Transforms this set into an array reversed.
-   *
-   * @returns {Array}
-   */
-  toReverseArray (): T[] {
-    return this.toArray().reverse()
   }
 
   /**

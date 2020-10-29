@@ -310,4 +310,14 @@ describe('Sets', () => {
         })
     ).toEqual(4)
   })
+
+  test('reverse', () => {
+    const expectedSet = Set.of([3, 2, 1])
+
+    expect(
+      Set
+        .of([1, 2, 3])
+        .reverse()
+    ).toEqual(expectedSet)
+  })
 })

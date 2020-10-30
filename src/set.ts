@@ -145,6 +145,24 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
+   * Returns the last element of the set or returns the last item in
+   * the set matching the given `predicate` function. Returns
+   * `undefined` if no matching item is found or available.
+   *
+   * @param {Function} predicate
+   *
+   * @returns {*}
+   */
+
+  last (predicate?: (item: T, set: SuperchargedSet<T>) => unknown): T | undefined {
+    if (predicate) {
+      return this.reverse().find(predicate)
+    }
+
+    return this.toArray().reverse()[0]
+  }
+
+  /**
    * Returns a new set instance containing the results of applying the
    * given `transform` function to each item in the set. Ultimately,
    * it flattens the mapped results one level deep.
@@ -260,6 +278,17 @@ export class SuperchargedSet<T> implements Iterable<T> {
     return this.toArray().reduce((carry: U, value: T) => {
       return operation(carry, value, this)
     }, initial)
+  }
+
+  /**
+   * Returns a set containing the items in reversed order.
+   *
+   * @returns {SuperchargedSet}
+   */
+  reverse (): SuperchargedSet<T> {
+    return SuperchargedSet.of(
+      this.toArray().reverse()
+    )
   }
 
   /**

@@ -294,4 +294,30 @@ describe('Sets', () => {
         })
     ).toEqual(4)
   })
+
+  test('last', () => {
+    expect(
+      Set
+        .of([1, 2, 3])
+        .last()
+    ).toEqual(3)
+
+    expect(
+      Set
+        .of([5, 4, 3, 2, 1])
+        .last(value => {
+          return value > 3
+        })
+    ).toEqual(4)
+  })
+
+  test('reverse', () => {
+    const expectedSet = Set.of([3, 2, 1])
+
+    expect(
+      Set
+        .of([1, 2, 3])
+        .reverse()
+    ).toEqual(expectedSet)
+  })
 })

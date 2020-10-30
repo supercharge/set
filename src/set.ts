@@ -153,13 +153,10 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @returns {*}
    */
-
   last (predicate?: (item: T, set: SuperchargedSet<T>) => unknown): T | undefined {
-    if (predicate) {
-      return this.reverse().find(predicate)
-    }
-
-    return this.toArray().reverse()[0]
+    return predicate
+      ? this.reverse().find(predicate)
+      : this.toArray().reverse()[0]
   }
 
   /**

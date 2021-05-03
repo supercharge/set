@@ -1,9 +1,10 @@
 # Changelog
 
 
-## [1.7.0](https://github.com/supercharge/set/compare/v1.6.0...v1.7.0) - 2020-10-xx
+## [1.7.0](https://github.com/supercharge/set/compare/v1.6.0...v1.7.0) - 2021-05-03
 
 ### Added
+- `at(index)` method: returns the item at the given `index`
 - `first(predicate?)` method: returns the first item in the set or the first item matching the given `predicate` function
 
 ### Updated

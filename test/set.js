@@ -320,4 +320,18 @@ describe('Sets', () => {
         .reverse()
     ).toEqual(expectedSet)
   })
+
+  test('at', () => {
+    expect(
+      Set.of([1, 2, 3]).at(0)
+    ).toEqual(1)
+
+    expect(
+      Set.of([1, 2, 3]).at(-1)
+    ).toEqual(3)
+
+    expect(
+      Set.of([1, 2, 3]).at(10)
+    ).toEqual(undefined)
+  })
 })

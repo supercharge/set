@@ -51,6 +51,27 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
+   * Returns the value at the given `index` or undefined if the index exceeds the set’s size.
+   *
+   * @param {Number} index
+   *
+   * @returns {T|undefined}
+   */
+  at (index: number): T | undefined {
+    index = Math.trunc(index) || 0
+
+    if (index < 0) {
+      index += this.size()
+    }
+
+    if (index < 0 || index >= this.size()) {
+      return undefined
+    }
+
+    return this.toArray()[index]
+  }
+
+  /**
    * Clears the set by removing all items.
    *
    * @returns {SuperchargedSet}
@@ -141,7 +162,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
   first (predicate?: (item: T, set: SuperchargedSet<T>) => unknown): T | undefined {
     return predicate
       ? this.find(predicate)
-      : this.toArray()[0]
+      : this.at(0)
   }
 
   /**
@@ -156,7 +177,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
   last (predicate?: (item: T, set: SuperchargedSet<T>) => unknown): T | undefined {
     return predicate
       ? this.reverse().find(predicate)
-      : this.toArray().reverse()[0]
+      : this.at(-1)
   }
 
   /**

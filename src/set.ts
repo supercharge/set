@@ -267,6 +267,17 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
+   * Returns a string by concatenating all of the items using the given `separator`.
+   *
+   * @param {String} separator
+   *
+   * @returns {String}
+   */
+  join (separator?: string): string {
+    return this.toArray().join(separator)
+  }
+
+  /**
    * Returns a new set instance containing the results of applying the
    * given `transform` function to each item in the set.
    *

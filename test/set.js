@@ -334,4 +334,22 @@ describe('Sets', () => {
       Set.of([1, 2, 3]).at(10)
     ).toEqual(undefined)
   })
+
+  test('join', () => {
+    expect(
+      Set.of([1, 2, 3]).join()
+    ).toEqual('1,2,3')
+
+    expect(
+      Set.of([1, 2, 3]).join(', ')
+    ).toEqual('1, 2, 3')
+
+    expect(
+      Set.of([1, 2, 3]).join('')
+    ).toEqual('123')
+
+    expect(
+      Set.of([1, 2, 3]).map(value => value * 2).join('--')
+    ).toEqual('2--4--6')
+  })
 })

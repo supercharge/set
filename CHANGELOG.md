@@ -1,6 +1,15 @@
 # Changelog
 
 
+## [1.8.0](https://github.com/supercharge/set/compare/v1.7.0...v1.8.0) - 2021-05-06
+
+### Added
+- `join(separator?)` method: returns a string of all items concatenated using the given `separator`.
+
+### Updated
+- bump dependencies
+
+
 ## [1.7.0](https://github.com/supercharge/set/compare/v1.6.0...v1.7.0) - 2021-05-03
 
 ### Added

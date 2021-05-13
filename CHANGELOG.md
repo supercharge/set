@@ -1,6 +1,22 @@
 # Changelog
 
 
+## [1.9.0](https://github.com/supercharge/set/compare/v1.8.0...v1.9.0) - 2021-05-13
+
+### Added
+- allow callback method as a seperator for `join(separator?)`
+  - Example:
+  ```
+    Set.of(['name', 'title']).join(item => {
+      return `<${item}> `
+    })
+    // '<name> <title> '
+  ```
+
+### Updated
+- bump dependencies
+
+
 ## [1.8.0](https://github.com/supercharge/set/compare/v1.7.0...v1.8.0) - 2021-05-06
 
 ### Added

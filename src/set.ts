@@ -273,8 +273,12 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @returns {String}
    */
-  join (separator?: string): string {
-    return this.toArray().join(separator)
+  join (separator?: string): string
+  join (separator?: (item: T, set: SuperchargedSet<T>) => string): string
+  join (separator?: any): string {
+    return typeof separator === 'function'
+      ? this.map(separator).toArray().join('')
+      : this.toArray().join(separator)
   }
 
   /**

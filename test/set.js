@@ -351,5 +351,17 @@ describe('Sets', () => {
     expect(
       Set.of([1, 2, 3]).map(value => value * 2).join('--')
     ).toEqual('2--4--6')
+
+    expect(
+      Set.of(['name', 'title']).join(item => {
+        return `<${item}> `
+      })
+    ).toEqual('<name> <title> ')
+
+    expect(
+      Set.of([1, 2, 3]).join(num => {
+        return num
+      })
+    ).toEqual('123')
   })
 })

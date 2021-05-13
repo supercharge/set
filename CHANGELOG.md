@@ -6,7 +6,7 @@
 ### Added
 - allow callback method as a seperator for `join(separator?)`
   - Example:
-  ```
+  ```js
     Set.of(['name', 'title']).join(item => {
       return `<${item}> `
     })

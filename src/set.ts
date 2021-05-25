@@ -258,6 +258,17 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
+   * Determine whether the set does not contain the given `value`.
+   *
+   * @param {*} value
+   *
+   * @returns {Boolean}
+   */
+  isMissing (value: T): boolean {
+    return !this.has(value)
+  }
+
+  /**
    * Determine whether the set is not empty (contains entries).
    *
    * @returns {Boolean}

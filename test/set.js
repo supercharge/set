@@ -13,6 +13,20 @@ describe('Sets', () => {
     expect(Set.of([1, 2, 3]).toArray()).toEqual([1, 2, 3])
   })
 
+  test('add', () => {
+    const marcus = new User('Marcus')
+    const norman = new User('Norman')
+
+    const set = Set.of([marcus, marcus])
+    expect(set.size()).toEqual(1)
+
+    set.add(norman)
+    expect(set.size()).toEqual(2)
+
+    set.add(norman)
+    expect(set.size()).toEqual(2)
+  })
+
   test('clear', () => {
     const set = Set.of([1, 2])
 
@@ -37,6 +51,21 @@ describe('Sets', () => {
     expect(set.size()).toEqual(2)
   })
 
+  test('delete objects', () => {
+    const marcus = new User('Marcus')
+    const norman = new User('Norman')
+
+    const set = Set.of([marcus, norman])
+
+    expect(set.has(marcus)).toBe(true)
+    expect(set.size()).toEqual(2)
+
+    set.delete(marcus)
+
+    expect(set.has(marcus)).toBe(false)
+    expect(set.size()).toEqual(1)
+  })
+
   test('flatten', () => {
     const set = Set.of([[1], 1, 22, true, [{}, 'Marcus', true], [22]]).flatten()
 
@@ -46,14 +75,32 @@ describe('Sets', () => {
   })
 
   test('has', () => {
-    const set = Set.of([1])
+    const marcus = new User('Marcus')
+    const norman = new User('Norman')
+    const set = Set.of([1, marcus, norman])
 
     expect(set.has(1)).toBe(true)
+    expect(set.has(marcus)).toBe(true)
+    expect(set.has(norman)).toBe(true)
 
     expect(set.has()).toBe(false)
     expect(set.has(2)).toBe(false)
     expect(set.has(null)).toBe(false)
     expect(set.has(undefined)).toBe(false)
+  })
+
+  test('isMissing', () => {
+    const marcus = new User('Marcus')
+    const norman = new User('Norman')
+    const set = Set.of([marcus, norman])
+
+    expect(set.has(marcus)).toBe(true)
+    expect(set.isMissing(marcus)).toBe(false)
+
+    expect(set.isMissing()).toBe(true)
+    expect(set.isMissing(2)).toBe(true)
+    expect(set.isMissing(null)).toBe(true)
+    expect(set.isMissing(undefined)).toBe(true)
   })
 
   test('includes', () => {
@@ -364,4 +411,42 @@ describe('Sets', () => {
       })
     ).toEqual('123')
   })
+
+  test('handle objects', () => {
+    const tutorial = {
+      title: 'Supercharge is sweet!'
+    }
+
+    const marcus = {
+      name: 'Marcus',
+      tutorials: [tutorial],
+      setName (name) { this.name = name },
+      address: { street: 'Street name', town: 'The City' }
+    }
+
+    const norman = {
+      name: 'Norman',
+      setName (name) { this.name = name },
+      address: { street: 'Another Street name', addon: 'c/o' },
+      tutorials: [tutorial],
+      tutorialCount: 1
+    }
+
+    const set = Set.of([marcus, marcus])
+    expect(set.size()).toEqual(1)
+
+    set.add(marcus)
+    set.add(norman)
+    expect(set.size()).toEqual(2)
+  })
 })
+
+class User {
+  constructor (name) {
+    this.meta = { name }
+  }
+
+  name () {
+    return this.meta.name
+  }
+}

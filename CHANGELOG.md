@@ -1,6 +1,15 @@
 # Changelog
 
 
+## [1.10.0](https://github.com/supercharge/set/compare/v1.9.0...v1.10.0) - 2021-xx-xx
+
+### Added
+- `isMissing(value)` method determining whether the given `value` is missing in the set
+
+### Updated
+- bump dependencies
+
+
 ## [1.9.0](https://github.com/supercharge/set/compare/v1.8.0...v1.9.0) - 2021-05-13
 
 ### Added

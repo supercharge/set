@@ -1,6 +1,6 @@
 'use strict'
 
-export class ValueComperator {
+export class ItemComperator {
   /**
    * Stores the item that is being compared to a `candidate`.
    */
@@ -102,7 +102,7 @@ export class ValueComperator {
     }
 
     return Array.from(this.item).every((item, index) => {
-      return new ValueComperator(item).equals(this.candidate[index])
+      return new ItemComperator(item).equals(this.candidate[index])
     })
   }
 
@@ -126,7 +126,7 @@ export class ValueComperator {
     }
 
     return Object.keys(this.item).every(key => {
-      return new ValueComperator(this.item[key]).equals(this.candidate[key])
+      return new ItemComperator(this.item[key]).equals(this.candidate[key])
     })
   }
 
@@ -139,4 +139,4 @@ export class ValueComperator {
     return this.item === this.candidate
   }
 }
-exports.ValueComperator = ValueComperator
+exports.ValueComperator = ItemComperator

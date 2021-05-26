@@ -1,12 +1,13 @@
 'use strict'
 
 import { tap } from '@supercharge/goodies'
+import { ItemComperator } from './comparator'
 
 export class SuperchargedSet<T> implements Iterable<T> {
   /**
    * Contains the items in the set.
    */
-  private readonly set: Set<T>
+  private set: Set<T>
 
   /**
    * Create a new set instance.
@@ -14,7 +15,13 @@ export class SuperchargedSet<T> implements Iterable<T> {
    * @param values
    */
   constructor (values?: Iterable<T>) {
-    this.set = new Set(values)
+    this.set = new Set()
+
+    if (values) {
+      for (const value of values) {
+        this.add(value)
+      }
+    }
   }
 
   /**
@@ -45,9 +52,11 @@ export class SuperchargedSet<T> implements Iterable<T> {
    * @returns {SuperchargedSet}
    */
   add (value: T): this {
-    return tap(this, () => {
+    if (this.isMissing(value)) {
       this.set.add(value)
-    })
+    }
+
+    return this
   }
 
   /**
@@ -102,7 +111,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @returns {Number}
    */
-  count<S extends T> (predicate: (item: T) => item is S): number {
+  count<S extends T> (predicate: (item: T, index: number, set: SuperchargedSet<T>) => item is S): number {
     return this.filter(predicate).size()
   }
 
@@ -111,10 +120,16 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {*} value
    *
-   * @returns {Boolean}
+   * @returns {SuperchargedSet}
    */
-  delete (value: T): boolean {
-    return this.set.delete(value)
+  delete (value: T): SuperchargedSet<T> {
+    this.set = new Set(
+      this.filter(item => {
+        return new ItemComperator(item).notEquals(value)
+      }).toArray()
+    )
+
+    return this
   }
 
   /**
@@ -124,12 +139,12 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @returns {SuperchargedSet}
    */
-  filter (predicate: (item: T, set: SuperchargedSet<T>) => unknown): SuperchargedSet<T>
-  filter<S extends T> (predicate: (item: T, set: SuperchargedSet<T>) => item is S): SuperchargedSet<T>
-  filter (predicate: (item: T, set: SuperchargedSet<T>) => unknown): SuperchargedSet<T> {
+  filter (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): SuperchargedSet<T>
+  filter<S extends T> (predicate: (item: T, index: number, set: SuperchargedSet<T>) => item is S): SuperchargedSet<T>
+  filter (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): SuperchargedSet<T> {
     return SuperchargedSet.of(
-      this.toArray().filter(value => {
-        return predicate(value, this)
+      this.toArray().filter((value, index) => {
+        return predicate(value, index, this)
       })
     )
   }
@@ -142,11 +157,27 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @returns {*}
    */
-  find (predicate: (item: T, set: SuperchargedSet<T>) => unknown): T | undefined
-  find<S extends T> (predicate: (item: T, set: SuperchargedSet<T>) => item is S): S | undefined
-  find (predicate: (item: T, set: SuperchargedSet<T>) => unknown): T | undefined {
-    return this.toArray().find(value => {
-      return predicate(value, this)
+  find (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): T | undefined
+  find<S extends T> (predicate: (item: T, index: number, set: SuperchargedSet<T>) => item is S): S | undefined
+  find (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): T | undefined {
+    return this.toArray().find((value, index) => {
+      return predicate(value, index, this)
+    })
+  }
+
+  /**
+   * Returns the index of the first element in the set where the
+   * given `predicate` function is `true`. Returns -1 otherwise.
+   *
+   * @param {Function} predicate
+   *
+   * @returns {Number}
+   */
+  findIndex (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): number
+  findIndex<S extends T> (predicate: (item: T, index: number, set: SuperchargedSet<T>) => item is S): number
+  findIndex (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): number {
+    return this.toArray().findIndex((value, index) => {
+      return predicate(value, index, this)
     })
   }
 
@@ -159,7 +190,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @returns {*}
    */
-  first (predicate?: (item: T, set: SuperchargedSet<T>) => unknown): T | undefined {
+  first (predicate?: (item: T, index: number, set: SuperchargedSet<T>) => unknown): T | undefined {
     return predicate
       ? this.find(predicate)
       : this.at(0)
@@ -174,7 +205,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @returns {*}
    */
-  last (predicate?: (item: T, set: SuperchargedSet<T>) => unknown): T | undefined {
+  last (predicate?: (item: T, index: number, set: SuperchargedSet<T>) => unknown): T | undefined {
     return predicate
       ? this.reverse().find(predicate)
       : this.at(-1)
@@ -189,9 +220,9 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @returns {Array}
    */
-  flatMap<R> (transform: (item: T, set: SuperchargedSet<T>) => R): SuperchargedSet<R> {
-    return this.map<R>((item: T) => {
-      return transform(item, this)
+  flatMap<R> (transform: (item: T, index: number, set: SuperchargedSet<T>) => R): SuperchargedSet<R> {
+    return this.map<R>((item, index) => {
+      return transform(item, index, this)
     }).flatten()
   }
 
@@ -211,9 +242,9 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {Function} action
    */
-  forEach (action: (item: T, set: SuperchargedSet<T>) => void): void {
-    this.set.forEach((value: T) => {
-      action(value, this)
+  forEach (action: (item: T, index: number, set: SuperchargedSet<T>) => void): void {
+    this.toArray().forEach((item, index) => {
+      action(item, index, this)
     })
   }
 
@@ -225,7 +256,9 @@ export class SuperchargedSet<T> implements Iterable<T> {
    * @returns {Boolean}
    */
   has (value: T): boolean {
-    return this.set.has(value)
+    return !!this.find((item: T) => {
+      return new ItemComperator(item).equals(value)
+    })
   }
 
   /**
@@ -237,14 +270,14 @@ export class SuperchargedSet<T> implements Iterable<T> {
    * @returns {boolean}
    */
   includes (value: T): boolean
-  includes (predicate: (item: T) => boolean): boolean
-  includes (valueOrPredicate: T | ((item: T) => boolean)): boolean {
+  includes (predicate: (item: T, index: number) => boolean): boolean
+  includes (valueOrPredicate: T | ((item: T, index: number) => boolean)): boolean {
     if (typeof valueOrPredicate !== 'function') {
       return this.has(valueOrPredicate)
     }
 
-    return !!this.find(item => {
-      return (valueOrPredicate as ((item: T) => boolean))(item)
+    return !!this.find((item, index) => {
+      return (valueOrPredicate as ((item: T, index: number) => boolean))(item, index)
     })
   }
 
@@ -285,7 +318,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
    * @returns {String}
    */
   join (separator?: string): string
-  join (separator?: (item: T, set: SuperchargedSet<T>) => string): string
+  join (separator?: (item: T, index: number, set: SuperchargedSet<T>) => string): string
   join (separator?: any): string {
     return typeof separator === 'function'
       ? this.map(separator).toArray().join('')
@@ -300,10 +333,10 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @returns {Array}
    */
-  map<R> (transform: (item: T, set: SuperchargedSet<T>) => R): SuperchargedSet<R> {
+  map<R> (transform: (item: T, index: number, set: SuperchargedSet<T>) => R): SuperchargedSet<R> {
     return SuperchargedSet.of(
-      this.toArray().map(value => {
-        return transform(value, this)
+      this.toArray().map((value, index) => {
+        return transform(value, index, this)
       })
     )
   }
@@ -318,9 +351,9 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @returns {*}
    */
-  reduce<U>(operation: (previous: U, current: T, set: SuperchargedSet<T>) => U, initial: U): U {
-    return this.toArray().reduce((carry: U, value: T) => {
-      return operation(carry, value, this)
+  reduce<U>(operation: (previous: U, current: T, index: number, set: SuperchargedSet<T>) => U, initial: U): U {
+    return this.toArray().reduce((carry, value, index) => {
+      return operation(carry, value, index, this)
     }, initial)
   }
 

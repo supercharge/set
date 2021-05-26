@@ -11,6 +11,18 @@ describe('Sets', () => {
 
     expect(Set.of([1, 2, 3]).isEmpty()).toBe(false)
     expect(Set.of([1, 2, 3]).toArray()).toEqual([1, 2, 3])
+
+    const users = [
+      { name: 'Marcus' },
+      { name: 'Norman' }
+    ]
+
+    expect(Set.of([
+      { name: 'Marcus' },
+      { name: 'Marcus' },
+      { name: 'Norman' },
+      { name: 'Norman' }
+    ]).toArray()).toEqual(users)
   })
 
   test('add', () => {
@@ -25,6 +37,13 @@ describe('Sets', () => {
 
     set.add(norman)
     expect(set.size()).toEqual(2)
+
+    set.add(new User('Norman'))
+    expect(set.size()).toEqual(2)
+
+    set.add(new User('Norman').with('long', 'hair'))
+    set.add(new User('Norman').with('short', 'hair'))
+    expect(set.size()).toEqual(4)
   })
 
   test('clear', () => {
@@ -40,15 +59,17 @@ describe('Sets', () => {
   })
 
   test('delete', () => {
-    const set = Set.of([1, 2, 3])
+    const marcus = { name: 'Marcus' }
+    const norman = { name: 'Norman' }
+    const set = Set.of([marcus, norman])
 
-    expect(set.has(1)).toBe(true)
-    expect(set.size()).toEqual(3)
-
-    set.delete(1)
-
-    expect(set.has(1)).toBe(false)
+    expect(set.has(marcus)).toBe(true)
     expect(set.size()).toEqual(2)
+
+    set.delete({ name: 'Marcus' })
+
+    expect(set.has(marcus)).toBe(false)
+    expect(set.size()).toEqual(1)
   })
 
   test('delete objects', () => {
@@ -197,10 +218,26 @@ describe('Sets', () => {
     ).toBeUndefined()
   })
 
+  test('findIndex', () => {
+    const set = Set.of([
+      { id: 1, name: 'Marcus' },
+      { id: 2, name: 'Norman' },
+      { id: 3, name: 'Christian' }
+    ])
+
+    expect(
+      set.findIndex((value) => value.name === 'Norman')
+    ).toEqual(1)
+
+    expect(
+      set.findIndex((value) => value.name === 'Supercharge')
+    ).toEqual(-1)
+  })
+
   test('forEach', () => {
     const set = Set.of([1, 2, 3])
 
-    const result = set.forEach((value, originalSet) => {
+    const result = set.forEach((value, _index, originalSet) => {
       expect(originalSet).toBe(set)
       return value.name
     })
@@ -413,40 +450,49 @@ describe('Sets', () => {
   })
 
   test('handle objects', () => {
-    const tutorial = {
-      title: 'Supercharge is sweet!'
-    }
+    const tutorial = { title: 'Supercharge is sweet!' }
 
     const marcus = {
       name: 'Marcus',
-      tutorials: [tutorial],
       setName (name) { this.name = name },
-      address: { street: 'Street name', town: 'The City' }
+      tutorials: [tutorial]
     }
 
     const norman = {
       name: 'Norman',
       setName (name) { this.name = name },
-      address: { street: 'Another Street name', addon: 'c/o' },
-      tutorials: [tutorial],
-      tutorialCount: 1
+      tutorials: [tutorial, tutorial],
+      tutorialCount: 2
     }
 
     const set = Set.of([marcus, marcus])
     expect(set.size()).toEqual(1)
 
-    set.add(marcus)
-    set.add(norman)
+    set.add(marcus).add(norman)
+    expect(set.size()).toEqual(2)
+
+    set.add({
+      name: 'Marcus',
+      setName (name) { this.name = name },
+      tutorials: [tutorial]
+    })
+
     expect(set.size()).toEqual(2)
   })
 })
 
 class User {
   constructor (name) {
-    this.meta = { name }
+    this.meta = { name, characteristics: {} }
   }
 
   name () {
     return this.meta.name
+  }
+
+  with (characteristic, value) {
+    this.meta.characteristics[characteristic] = value
+
+    return this
   }
 }

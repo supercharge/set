@@ -1,13 +1,32 @@
 # Changelog
 
 
-## [1.10.0](https://github.com/supercharge/set/compare/v1.9.0...v1.10.0) - 2021-xx-xx
+## [2.0.0](https://github.com/supercharge/set/compare/v1.9.0...v2.0.0) - 2021-xx-xx
 
 ### Added
 - `isMissing(value)` method determining whether the given `value` is missing in the set
+- `findIndex(predicate)` method determining the index of a given item. Returns `-1` if the item is not present in the set
 
 ### Updated
 - bump dependencies
+
+### Breaking Changes
+- adding only items that are **not** deeply equal to each other
+  ```js
+  // 1.x
+  const set = Set.of([{ name: 'Marcus' }])
+  set.size() // 1
+  set.add({ name: 'Marcus' })
+  set.size() // 2 (because the objects are "not the same")
+
+  // 2.x
+  const set = Set.of([{ name: 'Marcus' }])
+  set.size() // 1
+  set.add({ name: 'Marcus' })
+  set.size() // 1 (because the objects are "deeply equal")
+  ```
+
+- added `index` as the second argument of `find`, `map`, `flatMap`, `filter`, `forEach`, `first`, `last`, `count`, `includes`, `join`, `reduce`
 
 
 ## [1.9.0](https://github.com/supercharge/set/compare/v1.8.0...v1.9.0) - 2021-05-13

@@ -41,8 +41,8 @@ describe('Sets', () => {
     set.add(new User('Norman'))
     expect(set.size()).toEqual(2)
 
-    set.add(new User('Norman').with('long', 'hair'))
-    set.add(new User('Norman').with('short', 'hair'))
+    set.add(new User('Norman').with('hair', 'long'))
+    set.add(new User('Norman').with('hair', 'short'))
     expect(set.size()).toEqual(4)
   })
 

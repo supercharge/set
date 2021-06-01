@@ -30,11 +30,12 @@
 ---
 
 ## Introduction
-The `@supercharge/set` package provides a `Set` class with helpful methods like `.isEmpty()`, `.map(callback)`, `.filter(callback)`, `.find(callback)`, and many more.
+The `@supercharge/set` package provides an improved [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) implementation.
 
-**Notice:** the `@supercharge/set` package is not a drop-in replacement for the native `Set` class shipped by JavaScript. JavaScript aligned the `Set` and `Map` classes. Aligning sets and maps felt wrong for me. In my opinion, sets are more in line with arrays, not with maps. That’s why this package exists.
-
-**It’s the `Set` class JavaScript should have shipped.**
+- aligned with the `Array` class instead of `Map`
+- provides helpful methods like `.map(callback)`, `.filter(callback)`, `.find(callback)`, `.isEmpty()`, and many more.
+- compares values for `deep equality` and not `reference`
+- it’s the `Set` class JavaScript should have shipped
 
 
 ## Installation
@@ -44,8 +45,9 @@ npm i @supercharge/set
 ```
 
 
-## Docs
-Find all the [details for `@supercharge/set` in the extensive Supercharge docs](https://superchargejs.com/docs/set).
+## Resources
+
+- [Documentation](https://superchargejs.com/docs/set).
 
 
 ## Usage

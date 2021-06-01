@@ -47,10 +47,10 @@ npm i @supercharge/set
 
 ## Resources
 
-- [Documentation](https://superchargejs.com/docs/set).
+- [Documentation](https://superchargejs.com/docs/set)
 
 
-## Usage
+## Quick Usage Overview
 Using `@supercharge/set` is pretty straightforward. The package exports a `Set` class providing all methods to interact with the set.
 
 ```js
@@ -58,17 +58,14 @@ const Set = require('@supercharge/set')
 
 const users = new Set()
 
-users.isEmpty()
-// true
+users.isEmpty() // true
 
 users
   .add({ id: 1, name: 'Marcus' })
   .add({ id: 2, name: 'Norman' })
   .add({ id: 3, name: 'Christian' })
-  .add({ id: 4, name: 'Marcus' })
 
-users.isNotEmpty()
-// true
+users.isNotEmpty() // true
 
 const usernames = users.map(user => {
   return user.name

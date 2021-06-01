@@ -27,6 +27,15 @@
   ```
 
 - added `index` as the second argument of `find`, `map`, `flatMap`, `filter`, `forEach`, `first`, `last`, `count`, `includes`, `join`, `reduce`
+  ```js
+  // 1.x
+  const set = Set.of(['Marcus', 'Norman', 'Christian'])
+  set.map((name, set) => {}) // set were the second argument
+
+  // 2.x
+  const set = Set.of([{ name: 'Marcus' }])
+  set.map((name, index, set) => {}) // index is the second argument, set becomes the third
+  ```
 
 
 ## [1.9.0](https://github.com/supercharge/set/compare/v1.8.0...v1.9.0) - 2021-05-13

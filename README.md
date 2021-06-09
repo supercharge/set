@@ -14,7 +14,7 @@
   <p>
     <a href="#installation"><strong>Installation</strong></a> ·
     <a href="#Docs"><strong>Docs</strong></a> ·
-    <a href="#usage"><strong>Usage</strong></a>
+    <a href="#quick-usage-overview"><strong>Usage</strong></a>
   </p>
   <br/>
   <br/>

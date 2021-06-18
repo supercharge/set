@@ -1,6 +1,5 @@
 'use strict'
 
-import { tap } from '@supercharge/goodies'
 import { ItemComperator } from './comparator'
 
 export class SuperchargedSet<T> implements Iterable<T> {
@@ -86,9 +85,9 @@ export class SuperchargedSet<T> implements Iterable<T> {
    * @returns {SuperchargedSet}
    */
   clear (): this {
-    return tap(this, () => {
-      this.set.clear()
-    })
+    this.set.clear()
+
+    return this
   }
 
   /**

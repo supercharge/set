@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [2.0.0](https://github.com/supercharge/set/compare/v1.9.0...v2.0.0) - 2021-xx-xx
+## [2.0.0](https://github.com/supercharge/set/compare/v1.9.0...v2.0.0) - 2021-06-18
 
 ### Added
 - `isMissing(value)` method determining whether the given `value` is missing in the set
@@ -18,7 +18,7 @@ Starting in `2.x` we use a new comparison to determine whether an item exists in
   // 2.x
   const set = Set.of([{ name: 'Marcus' }])
   set.size() // 1
-  
+
   set.add({ name: 'Marcus' })
   set.size() // 1 (because the objects are "deeply equal")
 
@@ -26,7 +26,7 @@ Starting in `2.x` we use a new comparison to determine whether an item exists in
   // 1.x
   const set = Set.of([{ name: 'Marcus' }])
   set.size() // 1
-  
+
   set.add({ name: 'Marcus' })
   set.size() // 2 (because the objects are "not the same" reference)
   ```

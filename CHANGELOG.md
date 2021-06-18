@@ -17,7 +17,7 @@
   const set = Set.of([{ name: 'Marcus' }])
   set.size() // 1
   set.add({ name: 'Marcus' })
-  set.size() // 2 (because the objects are "not the same")
+  set.size() // 2 (because the objects are "not the same" reference)
 
   // 2.x
   const set = Set.of([{ name: 'Marcus' }])
@@ -30,11 +30,11 @@
   ```js
   // 1.x
   const set = Set.of(['Marcus', 'Norman', 'Christian'])
-  set.map((name, set) => {}) // set were the second argument
+  set.map((name, set) => {}) // "set" was the second argument
 
   // 2.x
-  const set = Set.of([{ name: 'Marcus' }])
-  set.map((name, index, set) => {}) // index is the second argument, set becomes the third
+  const set = Set.of(['Marcus', 'Norman', 'Christian'])
+  set.map((name, index, set) => {}) // "index" is the second argument, "set" becomes the third
   ```
 
 

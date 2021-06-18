@@ -11,30 +11,35 @@
 - bump dependencies
 
 ### Breaking Changes
-- adding only items that are **not** deeply equal to each other
-  ```js
-  // 1.x
-  const set = Set.of([{ name: 'Marcus' }])
-  set.size() // 1
-  set.add({ name: 'Marcus' })
-  set.size() // 2 (because the objects are "not the same" reference)
+Starting in `2.x` we use a new comparison to determine whether an item exists in the Set. In contrast, in version `1.x` we relied on the native JavaScript `Set` class to ensure unique values in the set. But that didn’t work properly, for example when adding an object with the same values twice.
 
+- a `set` contains only items that are **not deeply equal** to each other
+  ```js
   // 2.x
   const set = Set.of([{ name: 'Marcus' }])
   set.size() // 1
+  
   set.add({ name: 'Marcus' })
   set.size() // 1 (because the objects are "deeply equal")
+
+
+  // 1.x
+  const set = Set.of([{ name: 'Marcus' }])
+  set.size() // 1
+  
+  set.add({ name: 'Marcus' })
+  set.size() // 2 (because the objects are "not the same" reference)
   ```
 
-- added `index` as the second argument of `find`, `map`, `flatMap`, `filter`, `forEach`, `first`, `last`, `count`, `includes`, `join`, `reduce`
+- signature changes for a handful of methods: added `index` as the second argument of `find`, `map`, `flatMap`, `filter`, `forEach`, `first`, `last`, `count`, `includes`, `join`, `reduce`
   ```js
-  // 1.x
-  const set = Set.of(['Marcus', 'Norman', 'Christian'])
-  set.map((name, set) => {}) // "set" was the second argument
-
   // 2.x
   const set = Set.of(['Marcus', 'Norman', 'Christian'])
   set.map((name, index, set) => {}) // "index" is the second argument, "set" becomes the third
+
+  // 1.x
+  const set = Set.of(['Marcus', 'Norman', 'Christian'])
+  set.map((name, set) => {}) // "set" was the second argument
   ```
 
 

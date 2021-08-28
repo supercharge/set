@@ -1,6 +1,15 @@
 # Changelog
 
 
+## [2.1.0](https://github.com/supercharge/set/compare/v2.0.0...v2.1.0) - 2021-08-28
+
+### Added
+- `Set.from()` method to create a new set. This method aligns with JavaScript’s `Array.from` method
+
+### Updated
+- bump dependencies
+
+
 ## [2.0.0](https://github.com/supercharge/set/compare/v1.9.0...v2.0.0) - 2021-06-18
 
 ### Added

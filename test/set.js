@@ -25,6 +25,28 @@ describe('Sets', () => {
     ]).toArray()).toEqual(users)
   })
 
+  test('from', () => {
+    expect(Set.from().isEmpty()).toBe(true)
+    expect(Set.from([]).isEmpty()).toBe(true)
+    expect(Set.from(null).isEmpty()).toBe(true)
+    expect(Set.from(undefined).isEmpty()).toBe(true)
+
+    expect(Set.from([1, 2, 3]).isEmpty()).toBe(false)
+    expect(Set.from([1, 2, 3]).toArray()).toEqual([1, 2, 3])
+
+    const users = [
+      { name: 'Marcus' },
+      { name: 'Norman' }
+    ]
+
+    expect(Set.from([
+      { name: 'Marcus' },
+      { name: 'Marcus' },
+      { name: 'Norman' },
+      { name: 'Norman' }
+    ]).toArray()).toEqual(users)
+  })
+
   test('add', () => {
     const marcus = new User('Marcus')
     const norman = new User('Norman')

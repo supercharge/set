@@ -2,6 +2,8 @@
 
 import { ItemComperator } from './comparator'
 
+type ItemType<T> = T | T[] | null | undefined
+
 export class SuperchargedSet<T> implements Iterable<T> {
   /**
    * Contains the items in the set.
@@ -11,16 +13,12 @@ export class SuperchargedSet<T> implements Iterable<T> {
   /**
    * Create a new set instance.
    *
-   * @param values
+   * @param items
    */
-  constructor (values?: Iterable<T>) {
+  constructor (...items: Array<ItemType<T>>) {
     this.set = new Set()
 
-    if (values) {
-      for (const value of values) {
-        this.add(value)
-      }
-    }
+    this.add(...items)
   }
 
   /**
@@ -32,8 +30,8 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @deprecated use `Set.from()` instead
    */
-  static of<T> (values?: Iterable<T>): SuperchargedSet<T> {
-    return this.from(values)
+  static of<T> (...values: Array<ItemType<T>>): SuperchargedSet<T> {
+    return this.from(...values)
   }
 
   /**
@@ -43,8 +41,8 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @returns {SuperchargedSet}
    */
-  static from<T> (values?: Iterable<T>): SuperchargedSet<T> {
-    return new this<T>(values)
+  static from<T> (...values: Array<ItemType<T>>): SuperchargedSet<T> {
+    return new this<T>(...values)
   }
 
   /**
@@ -57,18 +55,39 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
-   * Adds the given `value` to the set.
+   * Adds the given `values` to the set.
    *
-   * @param {*} value
+   * @param {*} values
    *
    * @returns {SuperchargedSet}
    */
-  add (value: T): this {
-    if (this.isMissing(value)) {
-      this.set.add(value)
+  add (...values: Array<ItemType<T>>): this {
+    for (const value of this.resolveValues(...values)) {
+      if (this.isMissing(value)) {
+        this.set.add(value)
+      }
     }
 
     return this
+  }
+
+  /**
+   * Returns a flat array of items removing `undefined` and `null` values.
+   *
+   * @param values
+   *
+   * @returns {T[]}
+   */
+  private resolveValues (...values: Array<ItemType<T>>): T[] {
+    return values
+      .filter((value): value is T | T[] => {
+        return value !== undefined && value !== null
+      })
+      .flatMap(value => {
+        return Array.isArray(value)
+          ? value
+          : [value]
+      })
   }
 
   /**

@@ -27,13 +27,13 @@ test('of', () => {
 })
 
 test('from', () => {
-  expect(Set.from().isEmpty()).toBe(true)
-  expect(Set.from([]).isEmpty()).toBe(true)
-  expect(Set.from(null).isEmpty()).toBe(true)
-  expect(Set.from(undefined).isEmpty()).toBe(true)
+  expect(Set.from().toArray()).toEqual([])
+  expect(Set.from([]).toArray()).toEqual([])
+  expect(Set.from(null).toArray()).toEqual([])
+  expect(Set.from(undefined).toArray()).toEqual([])
 
-  expect(Set.from([1, 2, 3]).isEmpty()).toBe(false)
-  expect(Set.from([1, 2, 3]).toArray()).toEqual([1, 2, 3])
+  expect(Set.from(1, 1, 2, 3).toArray()).toEqual([1, 2, 3])
+  expect(Set.from([1, 1, 2, 3]).toArray()).toEqual([1, 2, 3])
 
   const users = [
     { name: 'Marcus' },
@@ -49,6 +49,9 @@ test('from', () => {
 })
 
 test('add', () => {
+  const nums = Set.from(1, 2)
+  expect(nums.add(1, 2, 3, 4).toArray()).toEqual([1, 2, 3, 4])
+
   const marcus = new User('Marcus')
   const norman = new User('Norman')
 

@@ -111,7 +111,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
    * @returns {SuperchargedSet}
    */
   concat (...values: Array<T | T[]>): SuperchargedSet<T> {
-    return SuperchargedSet.of(
+    return SuperchargedSet.from(
       this.toArray().concat(...values)
     )
   }
@@ -154,7 +154,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
   filter (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): SuperchargedSet<T>
   filter<S extends T> (predicate: (item: T, index: number, set: SuperchargedSet<T>) => item is S): SuperchargedSet<T>
   filter (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): SuperchargedSet<T> {
-    return SuperchargedSet.of(
+    return SuperchargedSet.from(
       this.toArray().filter((value, index) => {
         return predicate(value, index, this)
       })
@@ -244,7 +244,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
    * @returns {SuperchargedSet}
    */
   flatten (): SuperchargedSet<T> {
-    return SuperchargedSet.of(
+    return SuperchargedSet.from(
       ([] as T[]).concat(...this.toArray())
     )
   }
@@ -346,7 +346,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
    * @returns {Array}
    */
   map<R> (transform: (item: T, index: number, set: SuperchargedSet<T>) => R): SuperchargedSet<R> {
-    return SuperchargedSet.of(
+    return SuperchargedSet.from(
       this.toArray().map((value, index) => {
         return transform(value, index, this)
       })
@@ -375,7 +375,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
    * @returns {SuperchargedSet}
    */
   reverse (): SuperchargedSet<T> {
-    return SuperchargedSet.of(
+    return SuperchargedSet.from(
       this.toArray().reverse()
     )
   }

@@ -55,7 +55,7 @@ test('add', () => {
   const marcus = new User('Marcus')
   const norman = new User('Norman')
 
-  const set = Set.of([marcus, marcus])
+  const set = Set.from([marcus, marcus])
   expect(set.size()).toEqual(1)
 
   set.add(norman)
@@ -73,7 +73,7 @@ test('add', () => {
 })
 
 test('clear', () => {
-  const set = Set.of([1, 2])
+  const set = Set.from([1, 2])
 
   expect(set.size()).toEqual(2)
   expect(set.has(2)).toBe(true)
@@ -87,7 +87,7 @@ test('clear', () => {
 test('delete', () => {
   const marcus = { name: 'Marcus' }
   const norman = { name: 'Norman' }
-  const set = Set.of([marcus, norman])
+  const set = Set.from([marcus, norman])
 
   expect(set.has(marcus)).toBe(true)
   expect(set.size()).toEqual(2)
@@ -102,7 +102,7 @@ test('delete objects', () => {
   const marcus = new User('Marcus')
   const norman = new User('Norman')
 
-  const set = Set.of([marcus, norman])
+  const set = Set.from([marcus, norman])
 
   expect(set.has(marcus)).toBe(true)
   expect(set.size()).toEqual(2)
@@ -114,7 +114,7 @@ test('delete objects', () => {
 })
 
 test('flatten', () => {
-  const set = Set.of([[1], 1, 22, true, [{}, 'Marcus', true], [22]]).flatten()
+  const set = Set.from([[1], 1, 22, true, [{}, 'Marcus', true], [22]]).flatten()
 
   expect(set.toArray()).toEqual(
     [1, 22, true, {}, 'Marcus']
@@ -124,7 +124,7 @@ test('flatten', () => {
 test('has', () => {
   const marcus = new User('Marcus')
   const norman = new User('Norman')
-  const set = Set.of([1, marcus, norman])
+  const set = Set.from([1, marcus, norman])
 
   expect(set.has(1)).toBe(true)
   expect(set.has(marcus)).toBe(true)
@@ -139,7 +139,7 @@ test('has', () => {
 test('isMissing', () => {
   const marcus = new User('Marcus')
   const norman = new User('Norman')
-  const set = Set.of([marcus, norman])
+  const set = Set.from([marcus, norman])
 
   expect(set.has(marcus)).toBe(true)
   expect(set.isMissing(marcus)).toBe(false)
@@ -151,7 +151,7 @@ test('isMissing', () => {
 })
 
 test('includes', () => {
-  const set = Set.of([1, 2, 3, 4, 5])
+  const set = Set.from([1, 2, 3, 4, 5])
 
   expect(set.includes(1)).toBe(true)
 
@@ -229,7 +229,7 @@ test('filter', () => {
 })
 
 test('find', () => {
-  const set = Set.of([
+  const set = Set.from([
     { id: 1, name: 'Marcus' },
     { id: 2, name: 'Norman' },
     { id: 3, name: 'Christian' }
@@ -245,7 +245,7 @@ test('find', () => {
 })
 
 test('findIndex', () => {
-  const set = Set.of([
+  const set = Set.from([
     { id: 1, name: 'Marcus' },
     { id: 2, name: 'Norman' },
     { id: 3, name: 'Christian' }
@@ -261,7 +261,7 @@ test('findIndex', () => {
 })
 
 test('forEach', () => {
-  const set = Set.of([1, 2, 3])
+  const set = Set.from([1, 2, 3])
 
   const result = set.forEach((value, _index, originalSet) => {
     expect(originalSet).toBe(set)
@@ -316,7 +316,7 @@ test('values', () => {
 })
 
 test('for..of', () => {
-  const iterable = Set.of([1, 1, 2, 2, 3, 3])
+  const iterable = Set.from([1, 1, 2, 2, 3, 3])
   const array = []
 
   for (const value of iterable) {
@@ -327,7 +327,7 @@ test('for..of', () => {
 })
 
 test('Symbol.iterator', () => {
-  const set = Set.of([1, 1, 2, 2, 3, 3])
+  const set = Set.from([1, 1, 2, 2, 3, 3])
 
   const iterable = set[Symbol.iterator]()
   expect(iterable.next).toBeInstanceOf(Function)
@@ -342,16 +342,16 @@ test('Symbol.iterator', () => {
 })
 
 test('reduce', () => {
-  const set = Set.of([1, 2, 3, 4, 5])
+  const set = Set.from([1, 2, 3, 4, 5])
   expect(set.reduce((sum, value) => sum + value)).toBe(NaN)
 
   expect(set.reduce((sum, value) => sum + value, 0)).toBe(15)
   expect(set.reduce((sum, value) => sum + value, 5)).toBe(20)
 
-  const emptySet = Set.of([])
+  const emptySet = Set.from([])
   expect(emptySet.reduce((sum, value) => sum + value, 5)).toBe(5)
 
-  expect(() => Set.of([1, 2, 3]).reduce((sum, value) => {
+  expect(() => Set.from([1, 2, 3]).reduce((sum, value) => {
     if (value === 2) {
       throw new TypeError('failed')
     }
@@ -362,15 +362,15 @@ test('reduce', () => {
 
 test('concat', () => {
   expect(
-    Set.of([1, 2, 3]).concat([4, 5]).toArray()
+    Set.from([1, 2, 3]).concat([4, 5]).toArray()
   ).toEqual([1, 2, 3, 4, 5])
 
   expect(
-    Set.of([1, 2, 3]).concat([4, 5], [6, 7]).toArray()
+    Set.from([1, 2, 3]).concat([4, 5], [6, 7]).toArray()
   ).toEqual([1, 2, 3, 4, 5, 6, 7])
 
   expect(
-    Set.of([1, 2, 3]).concat(4, 5).toArray()
+    Set.from([1, 2, 3]).concat(4, 5).toArray()
   ).toEqual([1, 2, 3, 4, 5])
 })
 
@@ -422,7 +422,7 @@ test('last', () => {
 })
 
 test('reverse', () => {
-  const expectedSet = Set.of([3, 2, 1])
+  const expectedSet = Set.from([3, 2, 1])
 
   expect(
     Set
@@ -433,43 +433,43 @@ test('reverse', () => {
 
 test('at', () => {
   expect(
-    Set.of([1, 2, 3]).at(0)
+    Set.from([1, 2, 3]).at(0)
   ).toEqual(1)
 
   expect(
-    Set.of([1, 2, 3]).at(-1)
+    Set.from([1, 2, 3]).at(-1)
   ).toEqual(3)
 
   expect(
-    Set.of([1, 2, 3]).at(10)
+    Set.from([1, 2, 3]).at(10)
   ).toEqual(undefined)
 })
 
 test('join', () => {
   expect(
-    Set.of([1, 2, 3]).join()
+    Set.from([1, 2, 3]).join()
   ).toEqual('1,2,3')
 
   expect(
-    Set.of([1, 2, 3]).join(', ')
+    Set.from([1, 2, 3]).join(', ')
   ).toEqual('1, 2, 3')
 
   expect(
-    Set.of([1, 2, 3]).join('')
+    Set.from([1, 2, 3]).join('')
   ).toEqual('123')
 
   expect(
-    Set.of([1, 2, 3]).map(value => value * 2).join('--')
+    Set.from([1, 2, 3]).map(value => value * 2).join('--')
   ).toEqual('2--4--6')
 
   expect(
-    Set.of(['name', 'title']).join(item => {
+    Set.from(['name', 'title']).join(item => {
       return `<${item}> `
     })
   ).toEqual('<name> <title> ')
 
   expect(
-    Set.of([1, 2, 3]).join(num => {
+    Set.from([1, 2, 3]).join(num => {
       return num
     })
   ).toEqual('123')
@@ -491,7 +491,7 @@ test('handle objects', () => {
     tutorialCount: 2
   }
 
-  const set = Set.of([marcus, marcus])
+  const set = Set.from([marcus, marcus])
   expect(set.size()).toEqual(1)
 
   set.add(marcus).add(norman)
@@ -504,6 +504,21 @@ test('handle objects', () => {
   })
 
   expect(set.size()).toEqual(2)
+})
+
+test('any', () => {
+  const ids = Set.from(1, 2, 3, 4)
+  expect(ids.any(id => id < 2)).toBe(true)
+  expect(ids.any(id => id > 5)).toBe(false)
+
+  const set = Set.from([
+    { id: 1, name: 'Marcus' },
+    { id: 2, name: 'Norman' },
+    { id: 3, name: 'Christian' }
+  ])
+
+  expect(set.any((value) => value.name === 'Marcus')).toBe(true)
+  expect(set.any((value) => value.name === 'Supercharge')).toBe(false)
 })
 
 test.run()

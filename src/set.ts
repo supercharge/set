@@ -91,6 +91,17 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
+   * Determine whether at least one item in the set matches the given `predicate` function.
+   *
+   * @param {Function} predicate
+   *
+   * @returns {Boolean}
+   */
+  any (_predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): boolean {
+    // TODO
+  }
+
+  /**
    * Returns the value at the given `index` or undefined if the index exceeds the set’s size.
    *
    * @param {Number} index

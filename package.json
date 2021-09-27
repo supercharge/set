@@ -6,11 +6,10 @@
   "bugs": {
     "url": "https://github.com/supercharge/set/issues"
   },
-  "dependencies": {},
   "devDependencies": {
     "@supercharge/tsconfig": "~1.0.0",
-    "@types/jest": "~27.0.1",
     "@typescript-eslint/eslint-plugin": "~4.29.3",
+    "c8": "~7.9.0",
     "eslint": "~7.32.0",
     "eslint-config-standard": "~16.0.3",
     "eslint-config-standard-with-typescript": "~20.0.0",
@@ -18,8 +17,9 @@
     "eslint-plugin-node": "~11.1.0",
     "eslint-plugin-promise": "~5.1.0",
     "eslint-plugin-standard": "~4.1.0",
-    "jest": "~27.1.0",
-    "typescript": "~4.4.2"
+    "expect": "~27.2.2",
+    "typescript": "~4.4.2",
+    "uvu": "~0.5.1"
   },
   "files": [
     "dist"
@@ -45,8 +45,10 @@
     "dev": "tsc --watch",
     "lint": "eslint src --ext .ts",
     "lint:fix": "npm run lint -- --fix",
-    "test": "npm run build && npm run lint && npm run test:run",
-    "test:run": "jest"
+    "test": "npm run build && npm run lint && npm run test:coverage",
+    "test:run": "uvu",
+    "test:coverage": "c8 --include=dist npm run test:run && npm run test:report",
+    "test:report": "c8 report --reporter=html"
   },
   "types": "dist"
 }

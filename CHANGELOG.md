@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [2.2.0](https://github.com/supercharge/set/compare/v2.0.0...v2.1.0) - 2021-09-xx
+
+### Updated
+- bump dependencies
+- use `uvu` and `c8` instead of `jest` for testing
+
+
 ## [2.1.0](https://github.com/supercharge/set/compare/v2.0.0...v2.1.0) - 2021-08-28
 
 ### Added

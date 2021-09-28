@@ -2,7 +2,7 @@
 
 import { ItemComperator } from './comparator'
 
-type ItemType<T> = T | T[] | null | undefined
+type Values<T> = Array<T | Iterable<T> | undefined | null>
 
 export class SuperchargedSet<T> implements Iterable<T> {
   /**
@@ -15,7 +15,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param items
    */
-  constructor (...items: Array<ItemType<T>>) {
+  constructor (...items: Values<T>) {
     this.set = new Set()
 
     this.add(...items)
@@ -30,7 +30,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @deprecated use `Set.from()` instead
    */
-  static of<T> (...values: Array<ItemType<T>>): SuperchargedSet<T> {
+  static of<T> (...values: Values<T>): SuperchargedSet<T> {
     return this.from(...values)
   }
 
@@ -41,7 +41,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @returns {SuperchargedSet}
    */
-  static from<T> (...values: Array<ItemType<T>>): SuperchargedSet<T> {
+  static from<T> (...values: Values<T>): SuperchargedSet<T> {
     return new this<T>(...values)
   }
 
@@ -61,7 +61,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @returns {SuperchargedSet}
    */
-  add (...values: Array<ItemType<T>>): this {
+  add (...values: Values<T>): this {
     for (const value of this.resolveValues(...values)) {
       if (this.isMissing(value)) {
         this.set.add(value)
@@ -78,16 +78,31 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @returns {T[]}
    */
-  private resolveValues (...values: Array<ItemType<T>>): T[] {
-    return values
-      .filter((value): value is T | T[] => {
-        return value !== undefined && value !== null
-      })
-      .flatMap(value => {
-        return Array.isArray(value)
-          ? value
-          : [value]
-      })
+  private resolveValues (...values: Values<T>): T[] {
+    return values.filter(value => {
+      return value !== undefined && value !== null
+    }).flatMap(value => {
+      if (Array.isArray(value)) {
+        return value
+      }
+
+      if (this.isIterable(value)) {
+        return Array.from(value)
+      }
+
+      return ([] as T[]).concat(value ?? [])
+    })
+  }
+
+  /**
+   * Determine whether the given `value` is iterable.
+   *
+   * @param value
+   *
+   * @returns {Boolean}
+   */
+  private isIterable (value: any): value is Iterable<T> {
+    return Array.from(value).length > 0
   }
 
   /**
@@ -428,7 +443,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
    * @returns {Array}
    */
   toArray (): T[] {
-    return Array.from(this.set)
+    return Array.from(this)
   }
 
   /**

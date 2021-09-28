@@ -506,6 +506,23 @@ test('handle objects', () => {
   expect(set.size()).toEqual(2)
 })
 
+test('findLast', () => {
+  const ids = Set.from(1, 2, 3, 4)
+  expect(ids.findLast(id => id < 5)).toBe(4)
+  expect(ids.findLast(id => id > 3)).toBe(4)
+  expect(ids.findLast(id => id > 10)).toBeUndefined()
+
+  const christian = { id: 3, name: 'Christian', subscribed: true }
+  const set = Set.from([
+    { id: 1, name: 'Marcus', subscribed: true },
+    { id: 2, name: 'Norman', subscribed: true },
+    christian
+  ])
+
+  expect(set.findLast((value) => value.subscribed)).toEqual(christian)
+  expect(set.findLast((value) => value.name === 'Supercharge')).toBeUndefined()
+})
+
 test.run()
 
 class User {

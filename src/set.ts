@@ -213,6 +213,20 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
+   * Returns the last item in the set matching the given `predicate`
+   * function. Returns `undefined` if no item was found in the set.
+   *
+   * @param {Function} predicate
+   *
+   * @returns {*}
+   */
+  findLast<S extends T> (predicate: (item: T, index: number, set: SuperchargedSet<T>) => item is S): S | undefined
+  findLast (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): T | undefined
+  findLast (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): T | undefined {
+    // TODO
+  }
+
+  /**
    * Returns the first element of the set or returns the first item in
    * the set matching the given `predicate` function. Returns
    * `undefined` if no matching item is found or available.

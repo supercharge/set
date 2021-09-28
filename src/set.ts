@@ -335,7 +335,16 @@ export class SuperchargedSet<T> implements Iterable<T> {
    * @returns {SuperchargedSet}
    */
   intersect (...sets: Array<Iterable<T>>): SuperchargedSet<T> {
-    // TODO
+    return this.filter((value) => {
+      return sets.every((set) => {
+        for (const item of set) {
+          if (new ItemComperator(item).equals(value)) {
+            return true
+          }
+        }
+        return false
+      })
+    })
   }
 
   /**

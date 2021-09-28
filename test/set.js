@@ -5,10 +5,10 @@ const { test } = require('uvu')
 const expect = require('expect')
 
 test('of', () => {
-  expect(Set.of().isEmpty()).toBe(true)
-  expect(Set.of([]).isEmpty()).toBe(true)
+  expect(Set.of().toArray()).toEqual([])
+  expect(Set.of([]).toArray()).toEqual([])
   expect(Set.of(null).toArray()).toEqual([])
-  expect(Set.of(undefined).isEmpty()).toBe(true)
+  expect(Set.of(undefined).toArray()).toEqual([])
 
   expect(Set.of(1, 1, 2, 3).toArray()).toEqual([1, 2, 3])
   expect(Set.of([1, 1, 2, 3]).toArray()).toEqual([1, 2, 3])

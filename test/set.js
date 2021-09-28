@@ -7,11 +7,11 @@ const expect = require('expect')
 test('of', () => {
   expect(Set.of().isEmpty()).toBe(true)
   expect(Set.of([]).isEmpty()).toBe(true)
-  expect(Set.of(null).isEmpty()).toBe(true)
+  expect(Set.of(null).toArray()).toEqual([])
   expect(Set.of(undefined).isEmpty()).toBe(true)
 
-  expect(Set.of([1, 2, 3]).isEmpty()).toBe(false)
-  expect(Set.of([1, 2, 3]).toArray()).toEqual([1, 2, 3])
+  expect(Set.of(1, 1, 2, 3).toArray()).toEqual([1, 2, 3])
+  expect(Set.of([1, 1, 2, 3]).toArray()).toEqual([1, 2, 3])
 
   const users = [
     { name: 'Marcus' },
@@ -504,6 +504,30 @@ test('handle objects', () => {
   })
 
   expect(set.size()).toEqual(2)
+})
+
+test('intersect', () => {
+  const ids = Set.from(1, 2, 3, 4)
+
+  expect(
+    ids.intersect(Set.from([5])).toArray()
+  ).toEqual([])
+  expect(
+    ids.intersect(Set.from(2, 3)).toArray()
+  ).toEqual([2, 3])
+  expect(
+    ids.intersect(Set.from([2, 3]), Set.from([1, 4, 5, 6])).toArray()
+  ).toEqual([1, 2, 3, 4])
+
+  const marcus = { id: 1, name: 'Marcus', subscribed: true }
+  const norman = { id: 2, name: 'Norman', subscribed: true }
+  const christian = { id: 3, name: 'Christian', subscribed: true }
+  const supercharge = { id: 4, name: 'Supercharge', subscribed: true }
+
+  const users = Set.from([marcus, norman, christian])
+
+  expect(users.intersect(Set.from(christian)).toArray()).toEqual([christian])
+  expect(users.intersect(Set.from(supercharge)).toArray()).toEqual([])
 })
 
 test.run()

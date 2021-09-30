@@ -238,7 +238,11 @@ export class SuperchargedSet<T> implements Iterable<T> {
   findLast<S extends T> (predicate: (item: T, index: number, set: SuperchargedSet<T>) => item is S): S | undefined
   findLast (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): T | undefined
   findLast (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): T | undefined {
-    return this.last(predicate);
+    for (let i = this.size() - 1; i >= 0; i--) {
+      const item = this.at(i) as T
+      if (predicate?.(item, i, this)) return item
+    }
+    return undefined
   }
 
   /**
@@ -265,10 +269,8 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @returns {*}
    */
-  last (predicate?: (item: T, index: number, set: SuperchargedSet<T>) => unknown): T | undefined {
-    return predicate
-      ? this.reverse().find(predicate)
-      : this.at(-1)
+  last (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): T | undefined {
+    return this.findLast(predicate)
   }
 
   /**

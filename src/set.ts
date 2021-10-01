@@ -328,6 +328,26 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
+   * Returns a set containing all items that are contained in all collections, this set and and the given `sets`.
+   *
+   * @param {Array<Iterable<T>>} sets
+   *
+   * @returns {SuperchargedSet}
+   */
+  intersect (...sets: Array<Iterable<T>>): SuperchargedSet<T> {
+    return this.filter((value) => {
+      return sets.every((set) => {
+        for (const item of set) {
+          if (new ItemComperator(item).equals(value)) {
+            return true
+          }
+        }
+        return false
+      })
+    })
+  }
+
+  /**
    * Determine whether the set is empty (contains no entries).
    *
    * @returns {Boolean}

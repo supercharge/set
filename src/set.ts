@@ -271,7 +271,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
    * @returns {*}
    */
   last (predicate?: (item: T, index: number, set: SuperchargedSet<T>) => unknown): T | undefined {
-    return this.findLast(predicate ?? ((_, index, set) => index === set.size() - 1))
+    return predicate ? this.findLast(predicate) : this.at(-1)
   }
 
   /**

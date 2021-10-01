@@ -240,7 +240,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
   findLast (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): T | undefined {
     for (let i = this.size() - 1; i >= 0; i--) {
       const item = this.at(i) as T
-      if (predicate?.(item, i, this)) return item
+      if (predicate(item, i, this)) return item
     }
     return undefined
   }

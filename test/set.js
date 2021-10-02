@@ -521,6 +521,34 @@ test('findLast', () => {
 
   expect(set.findLast((value) => value.subscribed)).toEqual(christian)
   expect(set.findLast((value) => value.name === 'Supercharge')).toBeUndefined()
+
+})
+
+test('intersect', () => {
+  const ids = Set.from(1, 2, 3, 4)
+
+  expect(
+    ids.intersect(Set.from([5])).toArray()
+  ).toEqual([])
+  expect(
+    ids.intersect(Set.from(2, 3)).toArray()
+  ).toEqual([2, 3])
+  expect(
+    ids.intersect(Set.from([2, 3]), Set.from([1, 4, 5, 6])).toArray()
+  ).toEqual([])
+  expect(
+    ids.intersect(Set.from([1, 2, 3]), Set.from([1, 3, 4, 5, 6])).toArray()
+  ).toEqual([1, 3])
+
+  const marcus = { id: 1, name: 'Marcus', subscribed: true }
+  const norman = { id: 2, name: 'Norman', subscribed: true }
+  const christian = { id: 3, name: 'Christian', subscribed: true }
+  const supercharge = { id: 4, name: 'Supercharge', subscribed: true }
+
+  const users = Set.from([marcus, norman, christian])
+
+  expect(users.intersect(Set.from(christian)).toArray()).toEqual([christian])
+  expect(users.intersect(Set.from(supercharge)).toArray()).toEqual([])
 })
 
 test.run()

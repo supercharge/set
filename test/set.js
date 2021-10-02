@@ -521,7 +521,6 @@ test('findLast', () => {
 
   expect(set.findLast((value) => value.subscribed)).toEqual(christian)
   expect(set.findLast((value) => value.name === 'Supercharge')).toBeUndefined()
-
 })
 
 test('intersect', () => {

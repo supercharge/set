@@ -523,6 +523,22 @@ test('findLast', () => {
   expect(set.findLast((value) => value.name === 'Supercharge')).toBeUndefined()
 })
 
+test('findLastIndex', () => {
+  const ids = Set.from(1, 2, 3, 4)
+  expect(ids.findLastIndex(id => id < 4)).toBe(2)
+  expect(ids.findLastIndex(id => id > 3)).toBe(3)
+  expect(ids.findLastIndex(id => id > 10)).toBe(-1)
+
+  const set = Set.from([
+    { id: 1, name: 'Marcus', subscribed: true },
+    { id: 2, name: 'Norman', subscribed: true },
+    { id: 3, name: 'Christian', subscribed: true }
+  ])
+
+  expect(set.findLastIndex((value) => value.subscribed)).toEqual(2)
+  expect(set.findLastIndex((value) => value.name === 'Supercharge')).toBe(-1)
+})
+
 test('intersect', () => {
   const ids = Set.from(1, 2, 3, 4)
 
@@ -548,22 +564,6 @@ test('intersect', () => {
 
   expect(users.intersect(Set.from(christian)).toArray()).toEqual([christian])
   expect(users.intersect(Set.from(supercharge)).toArray()).toEqual([])
-})
-
-test('findLastIndex', () => {
-  const ids = Set.from(1, 2, 3, 4)
-  expect(ids.findLastIndex(id => id < 4)).toBe(2)
-  expect(ids.findLastIndex(id => id > 3)).toBe(3)
-  expect(ids.findLastIndex(id => id > 10)).toBe(-1)
-
-  const set = Set.from([
-    { id: 1, name: 'Marcus', subscribed: true },
-    { id: 2, name: 'Norman', subscribed: true },
-    { id: 3, name: 'Christian', subscribed: true }
-  ])
-
-  expect(set.findLastIndex((value) => value.subscribed)).toEqual(2)
-  expect(set.findLastIndex((value) => value.name === 'Supercharge')).toBe(-1)
 })
 
 test.run()

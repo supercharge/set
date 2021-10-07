@@ -250,6 +250,27 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
+   * Returns the index of the first item in the set that matches the
+   * given `predicate` function. Returns -1 otherwise.
+   *
+   * @param {Function} predicate
+   *
+   * @returns {Number}
+   */
+  findLastIndex (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): number
+  findLastIndex<S extends T> (predicate: (item: T, index: number, set: SuperchargedSet<T>) => item is S): number
+  findLastIndex (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): number {
+    for (let i = this.size() - 1; i >= 0; --i) {
+      const item = this.at(i) as T
+      if (predicate(item, i, this)) {
+        return i
+      }
+    }
+
+    return -1
+  }
+
+  /**
    * Returns the first element of the set or returns the first item in
    * the set matching the given `predicate` function. Returns
    * `undefined` if no matching item is found or available.

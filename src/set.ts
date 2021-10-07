@@ -113,13 +113,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
    * @returns {Boolean}
    */
   any (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): boolean {
-    for (let i = 0; i < this.size(); ++i) {
-      const item = this.at(i) as T
-      if (predicate(item, i, this)) {
-        return true
-      }
-    }
-    return false
+    return this.findIndex(predicate) !== -1
   }
 
   /**

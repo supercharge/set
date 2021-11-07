@@ -113,7 +113,9 @@ export class SuperchargedSet<T> implements Iterable<T> {
    * @returns {Boolean}
    */
   all (_predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): boolean {
-    // TODO
+    return this.toArray().every((value, index) => {
+      return _predicate(value, index, this)
+    })
   }
 
   /**

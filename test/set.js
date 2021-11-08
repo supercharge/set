@@ -506,6 +506,21 @@ test('handle objects', () => {
   expect(set.size()).toEqual(2)
 })
 
+test('all', () => {
+  const ids = Set.from(1, 2, 3, 4)
+  expect(ids.all(id => id < 5)).toBe(true)
+  expect(ids.all(id => id > 3)).toBe(false)
+
+  const set = Set.from([
+    { id: 1, name: 'Marcus', subscribed: true },
+    { id: 2, name: 'Norman', subscribed: true },
+    { id: 3, name: 'Christian', subscribed: true }
+  ])
+
+  expect(set.all(value => value.subscribed)).toBe(true)
+  expect(set.all(value => value.name === 'Marcus')).toBe(false)
+})
+
 test('findLast', () => {
   const ids = Set.from(1, 2, 3, 4)
   expect(ids.findLast(id => id < 5)).toBe(4)

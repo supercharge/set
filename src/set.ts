@@ -106,6 +106,19 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
+   * Determine whether all items in the set match the given `predicate` function.
+   *
+   * @param {Function} predicate
+   *
+   * @returns {Boolean}
+   */
+  all (_predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): boolean {
+    return this.toArray().every((value, index) => {
+      return _predicate(value, index, this)
+    })
+  }
+
+  /**
    * Returns the value at the given `index` or undefined if the index exceeds the set’s size.
    *
    * @param {Number} index

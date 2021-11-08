@@ -276,7 +276,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
-   * Returns the index of the first item in the set that matches the
+   * Returns the index of the last item in the set that matches the
    * given `predicate` function. Returns -1 otherwise.
    *
    * @param {Function} predicate

@@ -521,6 +521,21 @@ test('all', () => {
   expect(set.all(value => value.name === 'Marcus')).toBe(false)
 })
 
+test('any', () => {
+  const ids = Set.from(1, 2, 3, 4)
+  expect(ids.any(id => id < 2)).toBe(true)
+  expect(ids.any(id => id > 5)).toBe(false)
+
+  const set = Set.from([
+    { id: 1, name: 'Marcus' },
+    { id: 2, name: 'Norman' },
+    { id: 3, name: 'Christian' }
+  ])
+
+  expect(set.any((value) => value.name === 'Marcus')).toBe(true)
+  expect(set.any((value) => value.name === 'Supercharge')).toBe(false)
+})
+
 test('findLast', () => {
   const ids = Set.from(1, 2, 3, 4)
   expect(ids.findLast(id => id < 5)).toBe(4)

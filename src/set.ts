@@ -79,19 +79,21 @@ export class SuperchargedSet<T> implements Iterable<T> {
    * @returns {T[]}
    */
   private resolveValues (...values: Values<T>): T[] {
-    return values.filter(value => {
-      return value !== undefined && value !== null
-    }).flatMap(value => {
-      if (Array.isArray(value)) {
-        return value
-      }
+    return values
+      .filter(value => {
+        return value !== undefined && value !== null
+      })
+      .flatMap(value => {
+        if (Array.isArray(value)) {
+          return value
+        }
 
-      if (this.isIterable(value)) {
-        return Array.from(value)
-      }
+        if (this.isIterable(value)) {
+          return Array.from(value)
+        }
 
-      return ([] as T[]).concat(value ?? [])
-    })
+        return ([] as T[]).concat(value ?? [])
+      })
   }
 
   /**
@@ -112,10 +114,21 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @returns {Boolean}
    */
-  all (_predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): boolean {
+  all (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): boolean {
     return this.toArray().every((value, index) => {
-      return _predicate(value, index, this)
+      return predicate(value, index, this)
     })
+  }
+
+  /**
+   * Determine whether at least one item in the set matches the given `predicate` function.
+   *
+   * @param {Function} predicate
+   *
+   * @returns {Boolean}
+   */
+  any (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): boolean {
+    return this.findIndex(predicate) !== -1
   }
 
   /**
@@ -270,8 +283,8 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @returns {Number}
    */
-  findLastIndex (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): number
   findLastIndex<S extends T> (predicate: (item: T, index: number, set: SuperchargedSet<T>) => item is S): number
+  findLastIndex (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): number
   findLastIndex (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): number {
     for (let index = this.size() - 1; index >= 0; --index) {
       const item = this.at(index) as T
@@ -400,6 +413,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
             return true
           }
         }
+
         return false
       })
     })

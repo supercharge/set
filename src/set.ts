@@ -241,6 +241,50 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
+   * Returns the last item in the set matching the given `predicate`
+   * function. Returns `undefined` if no item was found in the set.
+   *
+   * @param {Function} predicate
+   *
+   * @returns {*}
+   */
+  findLast<S extends T> (predicate: (item: T, index: number, set: SuperchargedSet<T>) => item is S): S | undefined
+  findLast (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): T | undefined
+  findLast (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): T | undefined {
+    for (let index = this.size() - 1; index >= 0; index--) {
+      const item = this.at(index) as T
+
+      if (predicate(item, index, this)) {
+        return item
+      }
+    }
+
+    return undefined
+  }
+
+  /**
+   * Returns the index of the first item in the set that matches the
+   * given `predicate` function. Returns -1 otherwise.
+   *
+   * @param {Function} predicate
+   *
+   * @returns {Number}
+   */
+  findLastIndex (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): number
+  findLastIndex<S extends T> (predicate: (item: T, index: number, set: SuperchargedSet<T>) => item is S): number
+  findLastIndex (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): number {
+    for (let index = this.size() - 1; index >= 0; --index) {
+      const item = this.at(index) as T
+
+      if (predicate(item, index, this)) {
+        return index
+      }
+    }
+
+    return -1
+  }
+
+  /**
    * Returns the first element of the set or returns the first item in
    * the set matching the given `predicate` function. Returns
    * `undefined` if no matching item is found or available.
@@ -258,7 +302,8 @@ export class SuperchargedSet<T> implements Iterable<T> {
   /**
    * Returns the last element of the set or returns the last item in
    * the set matching the given `predicate` function. Returns
-   * `undefined` if no matching item is found or available.
+   * `undefined` if no matching item is found or available. If no predicate
+   * is given then the last item in the set is returned.
    *
    * @param {Function} predicate
    *
@@ -266,7 +311,7 @@ export class SuperchargedSet<T> implements Iterable<T> {
    */
   last (predicate?: (item: T, index: number, set: SuperchargedSet<T>) => unknown): T | undefined {
     return predicate
-      ? this.reverse().find(predicate)
+      ? this.findLast(predicate)
       : this.at(-1)
   }
 
@@ -337,6 +382,26 @@ export class SuperchargedSet<T> implements Iterable<T> {
 
     return !!this.find((item, index) => {
       return (valueOrPredicate as ((item: T, index: number) => boolean))(item, index)
+    })
+  }
+
+  /**
+   * Returns a set containing all items that are contained in all collections, this set and and the given `sets`.
+   *
+   * @param {Array<Iterable<T>>} sets
+   *
+   * @returns {SuperchargedSet}
+   */
+  intersect (...sets: Array<Iterable<T>>): SuperchargedSet<T> {
+    return this.filter((value) => {
+      return sets.every((set) => {
+        for (const item of set) {
+          if (new ItemComperator(item).equals(value)) {
+            return true
+          }
+        }
+        return false
+      })
     })
   }
 

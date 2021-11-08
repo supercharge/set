@@ -1,11 +1,19 @@
 # Changelog
 
 
-## [2.2.0](https://github.com/supercharge/set/compare/v2.0.0...v2.1.0) - 2021-09-xx
+## [2.2.0](https://github.com/supercharge/set/compare/v2.1.0...v2.2.0) - 2021-11-08
+
+### Added
+- `all(predicate)`: determine whether all of the values in the set matches the given predicate function
+- `any(predicate)`: determine whether at least one of the values in the set matches the given predicate function
+- `findLast(predicate)`: returns the last item in the set matching the given predicate function
+- `findLastIndex(predicate)`: returns the index of the last item in the set that matches the given `predicate` function, -1 otherwise
+- `intersect(...collections)`: returns a set containing all items that are contained in all collections, this set and and the given `collections`
 
 ### Updated
 - bump dependencies
 - use `uvu` and `c8` instead of `jest` for testing
+- `add(...values)` method now supports adding multiple values
 
 
 ## [2.1.0](https://github.com/supercharge/set/compare/v2.0.0...v2.1.0) - 2021-08-28

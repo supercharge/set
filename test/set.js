@@ -584,6 +584,9 @@ test('intersect', () => {
   expect(
     ids.intersect(Set.from([1, 2, 3]), Set.from([1, 3, 4, 5, 6])).toArray()
   ).toEqual([1, 3])
+  expect(
+    ids.intersect([1, 2, 3], Set.from([1, 3, 4, 5, 6])).toArray()
+  ).toEqual([1, 3])
 
   const marcus = { id: 1, name: 'Marcus', subscribed: true }
   const norman = { id: 2, name: 'Norman', subscribed: true }

@@ -88,6 +88,10 @@ export class SuperchargedSet<T> implements Iterable<T> {
           return value
         }
 
+        if (typeof value === 'string') {
+          return value
+        }
+
         if (this.isIterable(value)) {
           return Array.from(value)
         }

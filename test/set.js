@@ -49,6 +49,15 @@ test('from', () => {
 })
 
 test('add', () => {
+  const strings = new Set()
+  expect(strings.add(['super', 'charge', 'super']).toArray()).toEqual(['super', 'charge'])
+
+  const values = new Set()
+  values.add('super')
+  values.add('charge')
+  values.add('super')
+  expect(values.toArray()).toEqual(['super', 'charge'])
+
   const nums = Set.from(1, 2)
   expect(nums.add(1, 2, 3, 4).toArray()).toEqual([1, 2, 3, 4])
 

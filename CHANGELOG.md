@@ -1,6 +1,16 @@
 # Changelog
 
 
+## [3.0.0](https://github.com/supercharge/set/compare/v2.2.1...v3.0.0) - 2022-xx-xx
+
+### Updated
+- bump dependencies
+
+### Breaking Changes
+- require Node.js v14, drop support for Node.js v12
+- remove static `Set.of` method, use `Set.from` instead
+
+
 ## [2.2.1](https://github.com/supercharge/set/compare/v2.2.0...v2.2.1) - 2022-01-07
 
 ### Updated

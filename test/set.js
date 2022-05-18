@@ -2,29 +2,7 @@
 
 const Set = require('../dist')
 const { test } = require('uvu')
-const expect = require('expect')
-
-test('of', () => {
-  expect(Set.of().toArray()).toEqual([])
-  expect(Set.of([]).toArray()).toEqual([])
-  expect(Set.of(null).toArray()).toEqual([])
-  expect(Set.of(undefined).toArray()).toEqual([])
-
-  expect(Set.of(1, 1, 2, 3).toArray()).toEqual([1, 2, 3])
-  expect(Set.of([1, 1, 2, 3]).toArray()).toEqual([1, 2, 3])
-
-  const users = [
-    { name: 'Marcus' },
-    { name: 'Norman' }
-  ]
-
-  expect(Set.of([
-    { name: 'Marcus' },
-    { name: 'Marcus' },
-    { name: 'Norman' },
-    { name: 'Norman' }
-  ]).toArray()).toEqual(users)
-})
+const { expect } = require('expect')
 
 test('from', () => {
   expect(Set.from().toArray()).toEqual([])
@@ -324,7 +302,7 @@ test('values', () => {
   expect(iterator.next().value).toBeUndefined()
 })
 
-test('for..of', () => {
+test('for..from', () => {
   const iterable = Set.from([1, 1, 2, 2, 3, 3])
   const array = []
 
@@ -386,14 +364,14 @@ test('concat', () => {
 test('count', () => {
   expect(
     Set
-      .of([1, 2, 3, 4, 5])
+      .from([1, 2, 3, 4, 5])
       .map(num => num * 2)
       .count(value => value > 6)
   ).toEqual(2)
 
   expect(
     Set
-      .of([1, 2, 3, 4, 5])
+      .from([1, 2, 3, 4, 5])
       .count(num => num > 5)
   ).toEqual(0)
 })
@@ -401,13 +379,13 @@ test('count', () => {
 test('first', () => {
   expect(
     Set
-      .of([1, 2, 3])
+      .from([1, 2, 3])
       .first()
   ).toEqual(1)
 
   expect(
     Set
-      .of([1, 2, 3, 4, 5])
+      .from([1, 2, 3, 4, 5])
       .first(value => {
         return value > 3
       })
@@ -417,13 +395,13 @@ test('first', () => {
 test('last', () => {
   expect(
     Set
-      .of([1, 2, 3])
+      .from([1, 2, 3])
       .last()
   ).toEqual(3)
 
   expect(
     Set
-      .of([5, 4, 3, 2, 1])
+      .from([5, 4, 3, 2, 1])
       .last(value => {
         return value > 3
       })
@@ -435,7 +413,7 @@ test('reverse', () => {
 
   expect(
     Set
-      .of([1, 2, 3])
+      .from([1, 2, 3])
       .reverse()
   ).toEqual(expectedSet)
 })

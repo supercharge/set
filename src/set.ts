@@ -27,19 +27,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    * @param {Iterable} values
    *
    * @returns {SuperchargedSet}
-   *
-   * @deprecated use `Set.from()` instead
-   */
-  static of<T> (...values: Values<T>): SuperchargedSet<T> {
-    return this.from(...values)
-  }
-
-  /**
-   * Create a new set instance of the given `values`.
-   *
-   * @param {Iterable} values
-   *
-   * @returns {SuperchargedSet}
    */
   static from<T> (...values: Values<T>): SuperchargedSet<T> {
     return new this<T>(...values)

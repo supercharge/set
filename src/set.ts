@@ -507,6 +507,21 @@ export class SuperchargedSet<T> implements Iterable<T> {
   }
 
   /**
+   * Sort the set using a given `compareFn`. The compare function determines
+   * the order by it’s return value:
+   *   - a negative value if the first argument is less than second argument
+   *   - zero if they're equal
+   *   - a positive value if the second argument is larger than the first argument
+   *
+   * If the `compareFn` is omitted, the elements are sorted in ascending order.
+   */
+  sort (compareFn?: (a: T, b: T) => number): SuperchargedSet<T> {
+    return SuperchargedSet.from(
+      this.toArray().sort(compareFn)
+    )
+  }
+
+  /**
    * Transforms this set into an array.
    *
    * @returns {Array}

@@ -586,6 +586,35 @@ test('intersect', () => {
   expect(users.intersect(Set.from(supercharge)).toArray()).toEqual([])
 })
 
+test('sort', () => {
+  const ids = Set.from(2, 2, 5, 3, 1, 4, 1)
+
+  expect(
+    ids.sort().toArray()
+  ).toEqual([1, 2, 3, 4, 5])
+
+  expect(
+    ids.sort((a, b) => {
+      return b - a
+    }).toArray()
+  ).toEqual([5, 4, 3, 2, 1])
+
+  const marcus = { id: 2, name: 'Marcus', subscribed: true }
+  const norman = { id: 4, name: 'Norman', subscribed: true }
+  const christian = { id: 1, name: 'Christian', subscribed: true }
+  const supercharge = { id: 3, name: 'Supercharge', subscribed: true }
+
+  const users = Set.from([marcus, norman, christian, supercharge])
+
+  expect(
+    users.sort((a, b) => {
+      return a.id - b.id
+    }).toArray()
+  ).toEqual([
+    christian, marcus, supercharge, norman
+  ])
+})
+
 test.run()
 
 class User {

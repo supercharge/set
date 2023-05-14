@@ -26,7 +26,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {Iterable} values
    *
-   * @returns {SuperchargedSet}
    */
   static from<T> (...values: Values<T>): SuperchargedSet<T> {
     return new this<T>(...values)
@@ -35,7 +34,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
   /**
    * Returns an iterable of the values in the set.
    *
-   * @returns {IterableIterator}
    */
   [Symbol.iterator] (): IterableIterator<T> {
     return this.values()
@@ -46,7 +44,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {*} values
    *
-   * @returns {SuperchargedSet}
    */
   add (...values: Values<T>): this {
     for (const value of this.resolveValues(...values)) {
@@ -63,7 +60,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param values
    *
-   * @returns {T[]}
    */
   private resolveValues (...values: Values<T>): T[] {
     return values
@@ -92,7 +88,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param value
    *
-   * @returns {Boolean}
    */
   private isIterable (value: any): value is Iterable<T> {
     return Array.from(value).length > 0
@@ -103,7 +98,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {Function} predicate
    *
-   * @returns {Boolean}
    */
   all (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): boolean {
     return this.toArray().every((value, index) => {
@@ -116,7 +110,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {Function} predicate
    *
-   * @returns {Boolean}
    */
   any (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): boolean {
     return this.findIndex(predicate) !== -1
@@ -127,7 +120,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {Number} index
    *
-   * @returns {T|undefined}
    */
   at (index: number): T | undefined {
     index = Math.trunc(index) || 0
@@ -146,7 +138,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
   /**
    * Clears the set by removing all items.
    *
-   * @returns {SuperchargedSet}
    */
   clear (): this {
     this.set.clear()
@@ -159,7 +150,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {*} values
    *
-   * @returns {SuperchargedSet}
    */
   concat (...values: Array<T | T[]>): SuperchargedSet<T> {
     return SuperchargedSet.from(
@@ -172,7 +162,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {Function} predicate
    *
-   * @returns {Number}
    */
   count<S extends T> (predicate: (item: T, index: number, set: SuperchargedSet<T>) => item is S): number {
     return this.filter(predicate).size()
@@ -183,7 +172,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {*} value
    *
-   * @returns {SuperchargedSet}
    */
   delete (value: T): SuperchargedSet<T> {
     this.set = new Set(
@@ -200,7 +188,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {Function} predicate
    *
-   * @returns {SuperchargedSet}
    */
   filter (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): SuperchargedSet<T>
   filter<S extends T> (predicate: (item: T, index: number, set: SuperchargedSet<T>) => item is S): SuperchargedSet<T>
@@ -218,7 +205,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {Function} predicate
    *
-   * @returns {*}
    */
   find (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): T | undefined
   find<S extends T> (predicate: (item: T, index: number, set: SuperchargedSet<T>) => item is S): S | undefined
@@ -234,7 +220,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {Function} predicate
    *
-   * @returns {Number}
    */
   findIndex (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): number
   findIndex<S extends T> (predicate: (item: T, index: number, set: SuperchargedSet<T>) => item is S): number
@@ -250,7 +235,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {Function} predicate
    *
-   * @returns {*}
    */
   findLast<S extends T> (predicate: (item: T, index: number, set: SuperchargedSet<T>) => item is S): S | undefined
   findLast (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): T | undefined
@@ -272,7 +256,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {Function} predicate
    *
-   * @returns {Number}
    */
   findLastIndex<S extends T> (predicate: (item: T, index: number, set: SuperchargedSet<T>) => item is S): number
   findLastIndex (predicate: (item: T, index: number, set: SuperchargedSet<T>) => unknown): number
@@ -295,7 +278,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {Function} predicate
    *
-   * @returns {*}
    */
   first (predicate?: (item: T, index: number, set: SuperchargedSet<T>) => unknown): T | undefined {
     return predicate
@@ -311,7 +293,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {Function} predicate
    *
-   * @returns {*}
    */
   last (predicate?: (item: T, index: number, set: SuperchargedSet<T>) => unknown): T | undefined {
     return predicate
@@ -326,7 +307,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {Function} transform
    *
-   * @returns {Array}
    */
   flatMap<R> (transform: (item: T, index: number, set: SuperchargedSet<T>) => R): SuperchargedSet<R> {
     return this.map<R>((item, index) => {
@@ -337,7 +317,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
   /**
    * Flattens the items in the set one level deep.
    *
-   * @returns {SuperchargedSet}
    */
   flatten (): SuperchargedSet<T> {
     return SuperchargedSet.from(
@@ -361,7 +340,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {*} value
    *
-   * @returns {Boolean}
    */
   has (value: T): boolean {
     return !!this.find((item: T) => {
@@ -375,7 +353,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {Function|T} valueOrPredicate
    *
-   * @returns {boolean}
    */
   includes (value: T): boolean
   includes (predicate: (item: T, index: number) => boolean): boolean
@@ -394,7 +371,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {Array<Iterable<T>>} sets
    *
-   * @returns {SuperchargedSet}
    */
   intersect (...sets: Array<Iterable<T>>): SuperchargedSet<T> {
     return this.filter((value) => {
@@ -413,7 +389,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
   /**
    * Determine whether the set is empty (contains no entries).
    *
-   * @returns {Boolean}
    */
   isEmpty (): boolean {
     return this.size() === 0
@@ -424,7 +399,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {*} value
    *
-   * @returns {Boolean}
    */
   isMissing (value: T): boolean {
     return !this.has(value)
@@ -433,7 +407,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
   /**
    * Determine whether the set is not empty (contains entries).
    *
-   * @returns {Boolean}
    */
   isNotEmpty (): boolean {
     return !this.isEmpty()
@@ -444,7 +417,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {String} separator
    *
-   * @returns {String}
    */
   join (separator?: string): string
   join (separator?: (item: T, index: number, set: SuperchargedSet<T>) => string): string
@@ -460,7 +432,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    *
    * @param {Function} transform
    *
-   * @returns {Array}
    */
   map<R> (transform: (item: T, index: number, set: SuperchargedSet<T>) => R): SuperchargedSet<R> {
     return SuperchargedSet.from(
@@ -478,7 +449,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
    * @param operation
    * @param initial
    *
-   * @returns {*}
    */
   reduce<U>(operation: (previous: U, current: T, index: number, set: SuperchargedSet<T>) => U, initial: U): U {
     return this.toArray().reduce((carry, value, index) => {
@@ -489,7 +459,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
   /**
    * Returns a set containing the items in reversed order.
    *
-   * @returns {SuperchargedSet}
    */
   reverse (): SuperchargedSet<T> {
     return SuperchargedSet.from(
@@ -499,8 +468,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
 
   /**
    * Returns the size of the set.
-   *
-   * @returns {Number}
    */
   size (): number {
     return this.set.size
@@ -523,8 +490,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
 
   /**
    * Transforms this set into an array.
-   *
-   * @returns {Array}
    */
   toArray (): T[] {
     return Array.from(this)
@@ -532,8 +497,6 @@ export class SuperchargedSet<T> implements Iterable<T> {
 
   /**
    * Returns an iterable of values in the set.
-   *
-   * @returns {IterableIterator}
    */
   values (): IterableIterator<T> {
     return this.set.values()

@@ -1,13 +1,17 @@
 # Changelog
 
 
-## [3.0.0](https://github.com/supercharge/set/compare/v2.2.1...v3.0.0) - 2022-xx-xx
+## [3.0.0](https://github.com/supercharge/set/compare/v2.2.1...v3.0.0) - 2023-05-xx
+
+### Added
+- `sort(compareFn?)`: sort items in the set using an optional `compareFn`
+- test on Node.js v20
 
 ### Updated
 - bump dependencies
 
 ### Breaking Changes
-- require Node.js v14, drop support for Node.js v12
+- require Node.js v16, drop support for Node.js v12 and v14
 - remove static `Set.of` method, use `Set.from` instead
 
 

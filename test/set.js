@@ -366,6 +366,13 @@ test('count', () => {
     Set
       .from([1, 2, 3, 4, 5])
       .map(num => num * 2)
+      .count()
+  ).toEqual(5)
+
+  expect(
+    Set
+      .from([1, 2, 3, 4, 5])
+      .map(num => num * 2)
       .count(value => value > 6)
   ).toEqual(2)
 
